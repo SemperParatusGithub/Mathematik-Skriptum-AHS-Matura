@@ -314,6 +314,8 @@ In einer Schüssel liegen 4 rote, 3 blaue und 2 grüne Kugeln. Es wird zwei mal 
 \definecolor{myblue}{RGB}{70,110,200}
 \definecolor{mygreen}{RGB}{60,160,90}
 \begin{tikzpicture}[
+  scale=0.88,
+  transform shape,
   ball/.style={circle, minimum size=9mm, inner sep=0pt, draw=black, very thick},
   smallball/.style={circle, minimum size=6mm, inner sep=0pt, draw=black, very thick},
   prob/.style={font=\small},

@@ -5,7 +5,9 @@
 \usepackage[T1]{fontenc}
 \usepackage[ngerman]{babel}
 \usepackage{lmodern}
-\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{microtype}
+\setlength{\emergencystretch}{2em}
+\usepackage[a4paper,margin=2.5cm,headheight=14.5pt]{geometry}
 
 \usepackage{amsmath, amssymb, amsthm, mathtools}
 \numberwithin{equation}{subsection}
@@ -60,6 +62,7 @@
   urlcolor=tocblue,  
   citecolor=tocblue  
 }
+\usepackage{hypcap}
 
 % ToC-Layout  
 \usepackage{tocloft}  
@@ -96,7 +99,7 @@
   {0.6em}  
   {}
 
-\include{commands}
+\input{commands}
 
 % Titel
 \title{\textbf{Skriptum: Mathematik-Matura}}

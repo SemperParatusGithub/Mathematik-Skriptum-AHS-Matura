@@ -1,0 +1,43 @@
+# LaTeX / pdfTeX
+*.pdf
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+*.xdv
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex\(busy\)
+*.fdb_latexmk
+*.dep
+*.dpth
+*.md5
+*.listing
+
+# Bibliography / Biber
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*.run.xml
+
+# Build helpers
+*.figlist
+*.makefile
+
+# minted / other
+_minted*
+*.pyg
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
