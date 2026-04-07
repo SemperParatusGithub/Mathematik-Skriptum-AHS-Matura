@@ -1,0 +1,869 @@
+\section{Wahrscheinlichkeit und Statistik (WS)}
+\subsection{Beschreibende Statistik}
+\subsubsection{statistische Kennzahlen}
+\subsubsection*{absolute Häufigkeit}
+Wenn man die Datenmenge bestehend aus $n$ Elementen in Klassen einteilen. Dann sagt die absolute Häufigkeit $H_i$, wie viele Daten der i-ten Klasse zugeteilt sind.
+\[  
+    H_i = \text{Anzahl der Werte pro Klasse } i
+\]  
+  
+\subsubsection*{relative Häufigkeit}
+Die relative Häufigkeit berechnet sich aus der Anzahl der Daten in einer Klasse dividiert durch die Anzahl der Elemente $n$ der Datenmenge:
+\[  
+    h_i = \frac{H_i}{n} 
+\]
+\begin{bsp}
+Die Datenmenge beschreibt das Alter von $n=13$ Personen:
+\[  
+    x = \{11,\,12,\,13,\,13,\,14,\,14,\,14,\,14,\,15,\,15,\,16,\,17,\,18,\,18\}  
+\]  
+absolute Häufigkeiten
+\[  
+    \begin{array}{c|cccccccc}  
+        \text{Alter} & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 \\  
+        \hline  
+        H_i          &  1 &  1 &  2 &  4 &  2 &  1 &  1 &  2  
+    \end{array}  
+\]  
+relative Häufigkeiten
+\[  
+    \begin{array}{c|cccccccc}  
+        \text{Alter} & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 \\  
+        \hline  
+        h_i          & 7.1\,\% & 7.1\,\% & 14.2\,\% & 28.5\,\% & 14{,}2\,\% & 7.1\,\% & 7.1\,\% & 14.2\,\%  
+    \end{array}  
+\]
+Wichtig: die Summer der relativen Häufikeiten ergibt immer $100\,\%$.
+\begin{geogebracode}
+    l1 = { 11, 12, 13, 13, 14, 14, 14, 14, 15, 15, 16, 17, 18, 18 };
+    l1_sortiert = Sortiere(l1);
+    
+    Häufigkeitstabelle(l1,1);  // Skalierungsfaktor=1
+    Häufigkeitstabelle(l1,1/n);  // Tabellle der reltaiven Häufigkeiten
+\end{geogebracode}
+\end{bsp}
+
+\pagebreak
+\subsubsection*{arithmetisches Mittel}
+Das arithmetische Mittel (Mittelwert) einer Datenreihe ist wie folgt definiert:
+\begin{equation}
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i = \frac{x_1 + x_2 + \dots + x_n}{n}
+\end{equation}
+\begin{bsp}
+Gegeben sei die Wertemenge: \( x = \{3,\, 7,\, 2,\, 9,\, 5,\, 6 \} \) \\
+\[
+    \bar{x} = \frac{3+7+2+9+5+6}{6} = 5.\dot{3}
+\]
+\begin{geogebracode}
+    l1 = { 3, 7, 2, 9, 5, 6};
+    Mittelwert(l1);
+\end{geogebracode}
+\end{bsp}
+\subsubsection*{Median}
+Der Median oder auch Zentralwert, ist jener Messwert, welcher nach Sortieren der Werte genau in der Mitte liegt. Gibt es eine gerade Anzahl an Messwerten, so wird der Median als arithmetisches Mittel der beiden Zahlen definiert.
+\begin{equation}
+    \tilde{x} =
+    \begin{cases}
+        x_{\left(\frac{n+1}{2}\right)}, & \text{falls } n \text{ ungerade} \\[1em]
+        \dfrac{x_{\left(\frac{n}{2}\right)} + x_{\left(\frac{n}{2}+1\right)}}{2}, & \text{falls } n \text{gerade}
+    \end{cases}
+\end{equation}
+
+\begin{bsp}
+Gegeben sei die Wertemenge: \( x = \{3,\, 7,\, 2,\, 9,\, 5,\, 6 \} \) \\
+Zuerst werden die Werte sortiert:
+\[
+    x = \{2,\, 3,\ 5,\, 6,\, 7,\, 9 \} 
+\]
+Es gibt $n=6$ Werte, der Median ist der Mittelwert des dritten (\(x_{(3)}\)) und vierten (\(x_{(4)}\)) Wertes:
+\[
+    \tilde{x} = \frac{x_{(3)}+x_{(4)}}{2} = \frac{5+6}{2} = 5.5
+\]
+\begin{geogebracode}
+    l1 = { 3, 7, 2, 9, 5, 6};
+    Median(l1);
+\end{geogebracode}
+\end{bsp}
+
+\subsubsection*{Modus}
+Der Modus, auch Modalwert genannt, ist der in einer Datenreihe am häufigsten vorkommende Wert.
+\subsubsection*{Standardabweichung und Varianz}
+Die (empirische) Standardabweichung und (empirische) Varianz messen die durchschnittliche Abweichung der einzelnen Werte vom Mittelwert einer Datenliste:
+\begin{align}
+    s &= \sqrt{\frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2} && \text{(Standardabweichung)} \\
+    s^2 &= \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2 && \text{(Varianz)}
+\end{align}
+\begin{bsp}
+Gegeben sei die Wertemenge: \( x = \{3,\, 7,\, 2,\, 9,\, 5,\, 6,\, 8,\, 3,\, 5 \} \) \\ 
+Es wird hier nur die Berechnung in Geogebra ausgeführt da die händische Berechnung sehr aufwändig ist.
+\begin{geogebracode}
+    l1 = { 3, 7, 2, 9, 5, 6, 8, 3, 5 };
+    shoch2 = Varianz(l1); // 5.111
+    s = Standardabweichung(l1); // 2.261
+\end{geogebracode}
+\end{bsp}
+
+\subsubsection*{Minimum, Maximum und Spannweite}
+\begin{equation}
+    \mathrm{min} = \mathrm{minimaler\; Wert\; der\; Datenmenge}
+\end{equation}
+\begin{equation}
+    \mathrm{max} = \mathrm{maximaler\; Wert\; der\; Datenmenge}
+\end{equation}
+\begin{equation}
+    \mathrm{Spannweite} = \mathrm{max} - \mathrm{min}
+\end{equation}
+
+\begin{bsp}
+Gegeben sei die Wertemenge: \( x = \{3,\, 7,\, 2,\, 9,\, 5,\, 6,\, 8,\, 3,\, 5 \} \) \\ 
+\begin{geogebracode}
+    l1 = { 3, 7, 2, 9, 5, 6, 8, 3, 5 };
+    Min(l1)
+    Max(l1)
+\end{geogebracode}
+\end{bsp}
+
+\subsubsection{Boxplot}
+Gegeben sei eine Datenmenge mit $n$ Messwerten, aufsteigend sortiert.  
+\begin{itemize}  
+  \item \textbf{Unteres Quartil} ($q_1$): Mindestens $25\%$ der Werte sind kleiner oder gleich $q_1$ , zugleich sind mindestens $75\%$ der Werte größer oder gleich $q_1$.
+  \item \textbf{Median} ($q_2$): Median der unteren Hälfte der Daten. \\
+  Mindestens $50\%$ der Werte sind kleiner oder gleich $Q_2$ , zugleich sind mindestens $50\%$ der Werte größer oder gleich $Q_2$.
+  \item \textbf{Oberes Quartil} ($q_3$): Median der oberen Hälfte der Daten. \\
+  Mindestens $75\%$ der Werte sind kleiner oder gleich $q_3$, zugleich sind mindestens $25\%$  der Werte größer oder gleich $q_3$.
+\end{itemize}  
+\noindent
+Der Interquartilabstand ist definiert als:
+\begin{equation}
+\mathrm{Interquartilabstand} = q_3 - q_1
+\end{equation}
+
+\begin{bsp}
+Boxplot für \(x=\{3,\,3,\,3,\,3,\,9,\,9,\,10\,,10,\,12,\,12,\,12,\,12,\,16,\,18,\,20,\,25\} \)
+\[
+    \min=3,\quad q_1=6,\quad q_2=\tilde{x}=11,\quad q_3=14,\quad \max=25,
+\]
+\[
+    \mathrm{Interquartilabstand}=q_3-1_1=8,\quad \mathrm{Spannweite}=\max-\min=22.
+\]
+\begin{center}
+\begin{tikzpicture}[>=stealth]
+  \begin{axis}[  
+    width=13cm,  
+    height=5cm,  
+    axis x line*=bottom,  
+    axis y line=none,  
+    xmin=0, xmax=28,  
+    ymin=0, ymax=1,
+    xtick={3,6,11,14,25},
+    xticklabels={$3$, $6$, $11$, $14$, $25$},
+    tick label style={font=\small},
+    every axis plot/.append style={no markers},
+    axis line style = {latex-latex}
+  ]  
+  
+  % Box (Q1 bis Q3) – ohne horizontale Mittel-Linie in der Box  
+  % \addplot[black, thick] coordinates {(6,0.5) (14,0.5)}; % entfernt  
+  \addplot[black, thick] coordinates {(6,0.3) (6,0.7)};  
+  \addplot[black, thick] coordinates {(14,0.3) (14,0.7)};  
+  \addplot[black, thick] coordinates {(6,0.3) (14,0.3)};  
+  \addplot[black, thick] coordinates {(6,0.7) (14,0.7)};  
+  
+  % Median (Q2) – bleibt erhalten  
+  \addplot[black, thick] coordinates {(11,0.3) (11,0.7)};  
+  
+  % Whisker (Min bis Q1, Q3 bis Max)  
+  \addplot[black, thick] coordinates {(3,0.5) (6,0.5)};  
+  \addplot[black, thick] coordinates {(14,0.5) (25,0.5)};  
+  \addplot[black, thick] coordinates {(3,0.4) (3,0.6)}  
+    node[pos=1, below, yshift=-18pt] {\small Min};  
+  \addplot[black, thick] coordinates {(25,0.4) (25,0.6)}  
+    node[pos=1, below, yshift=-18pt] {\small Max};  
+  
+  % Spannweite (Min zu Max)  
+  \addplot[<->, accent, thick] coordinates {(3,0.82) (25,0.82)}  
+    node[pos=0.5, above] {\small Spannweite};  
+  
+  % IQR (Q1 zu Q3)  
+  \addplot[<->, accent, thick] coordinates {(6,0.2) (14,0.2)}  
+    node[pos=0.5, below] {\small Interquartilabstand};  
+  
+  % Zusätzliche Labels direkt an den Ticks  
+  \node[below=6pt] at (axis cs:6,0) {\small Unteres Quartil};  
+  \node[below=6pt] at (axis cs:14,0) {\small Oberes Quartil};  
+  
+  \end{axis}  
+\end{tikzpicture}  
+\end{center}
+In Geogebra kann man alle Werte einzeln berechnen oder direkt das Boxplot zeichnen lassen.
+\begin{geogebracode}
+    l1 = { 3, 3, 3, 3, 9, 9, 10 , 10, 12, 12, 12, 12, 16, 18, 20, 25 }
+    
+    minimum = Min(l1);
+    maximum = Max(l1);
+    
+    q1 = Quartil1(l1);
+    q2 = Median(l1);
+    q3 = Quartil3(l1);
+    
+    spannweite = maximum - minimum;
+    interquartilabstand = q3 - q1;
+
+    Boxplot(2, 1, l1); // y-Abstand=2, y-Skalierung = 1
+\end{geogebracode}
+\end{bsp}
+
+\subsection{Grundbegriffe}
+\subsubsection{Definitionen}
+Zufallsexperiment: Vorgang, der unter genau festgelegten Bedingungen durchgeführt wird und dessen Ergebnis vor der Durchführung nicht sicher vorhersagbar ist, aber aus einer Menge möglicher Ausgänge stammt. \\
+Grundmenge: Die Grundmenge $G$ beinhaltet alle möglichen Ausgänge $\omega_i$ eines Zufallsexperiments:
+\[
+    G = \{ G_1,\,G_2,\,\dots\,G_n\}
+\]
+Ereignis: Jede Teilmenge des Grundraumes ist ein Ereignis $E$
+\begin{bsp}
+    Würfeln eines Würfels
+    \[
+        G = \{1,\, 2,\, 3,\, 4,\, 5,\, 6\}
+    \]
+    Ereignis eine Zahl $>2$ zu würfeln:
+    \[
+        E=\{3,\, 4,\, 5,\, 6\}
+    \]
+    Ereignis eine Zahl $<7$ zu würfeln (sicheres Ereignis):
+    \[
+        E=\{1,\, 2,\, 3,\, 4,\, 5,\, 6\} = G
+    \]
+    Ereignis eine Zahl $>7$ zu würfeln (unmögliches Ereignis):
+    \[
+        E=\{\}
+    \]
+\end{bsp}
+\subsubsection{Begriff der Wahrscheinlichkeit}
+Die relative Häufigkeit einer Grundmenge mit $n$ Elementen wurde im Abschnitt \textcolor{red}{X.x} bereits eingeführt.\\
+Die Wahrscheinlichkeit $P$ wird als Grenzwert der relativen Häufigkeit eines Ereignisses $h(E)$ für größer werdende $n$ definiert:
+\[
+    P(E) = \lim_{n\rightarrow\infty}{h(E)}
+\]
+\subsubsection{Wahrscheinlichkeit nach Laplace}
+Bei der Laplace Wahrscheinlichkeit müssen alle Ergebnisse des Experiments die gleiche Chance haben einzutreten und die Chancen dürfen sich bei Wiederholung nicht ändern.
+\[
+    P(E) = \frac{\text{günstige Fälle}}{\text{mögliche Fälle}}
+\]
+$P(E)=1$ für ein sicheres Ereignis \\
+$P(E)=0$ für ein unmögliches Ereignis \\
+$P(\text{nicht } E) = P(\overline{E}) = 1 - P(E)$ Gegenwahrscheinlichkeit
+\begin{bsp}
+    Würfeln eines Würfels (\(\Omega = \{1,\, 2,\, 3,\, 4,\, 5,\, 6\}\))
+    \begin{align*}
+        &P(\mathrm{Augenzahl = 6}) = \frac{1}{6} = 0.1\dot{6} \\
+        &P(\mathrm{Augenzahl \neq 6}) = 1 -  P(\mathrm{Augenzahl = 6}) = 1 - \frac{1}{6} = 0.8\dot{6} \\
+        &P(\mathrm{Augenzahl > 3}) = \frac{3}{6} = 0.5
+    \end{align*}
+\end{bsp}
+
+\subsubsection{Wahrscheinlichkeit zusammengesetzter Ereignisse}
+Ein Ereignis kann sich aus mehreren Einzelereignissen zusammensetzen. Diese Ereignisse können mit einem \emph{UND} bzw. einem \emph{ODER} verknüpft sein.
+\\
+\subsubsection*{Additionssatz für die ODER-Verknüpfung von Ereignissen}
+\begin{align}
+    &P(A\;\mathrm{oder}\;B)=P(A\lor B) = P(A) + P(B) \qquad \text{(A, B einander ausschließend)} \\
+    &P(A\;\mathrm{oder}\;B)=P(A\lor B) = P(A) + P(B) - P(A\;und\;B) \qquad \text{(A, B beliebig)}
+\end{align}
+\vspace{-10pt}
+\begin{aufgabe}
+    In einer Schachtel befinden sich 3 große rote, 4 kleine rote, 7 große blaue, 2 kleine blaue sowie 9 grüne Kugeln. Jemand zieht eine Kugel. Wie hoch ist die Wahrscheinlichkeit, dass er 1) eine rote oder blaue Kugel 2) eine große oder rote Kugel zieht?
+\end{aufgabe}
+\begin{loesung} \\
+    1) Die Ereignisse, dass eine \emph{rote} oder \emph{blaue Kugel} gezogen wird sind voneinander unabhängig:
+    \[
+        P(\text{rot} \lor \text{blau}) = P(\text{rot}) + P(\text{blau}) = 
+            \frac{7}{25} + \frac{9}{25} = 0.64 = 64\,\%
+    \]
+    1) Die Ereignisse, dass eine \emph{große} oder eine \emph{rote Kugel} überschneiden sich. Man muss daher am Ende nochmals die \emph{großen roten Kugeln abziehen} da sie in beiden Mengen vorkommen:
+    \[
+        P(\text{groß} \lor \text{rot}) = P(\text{groß}) + P(\text{rot}) - P(\text{groß und rot}) = 
+            \frac{10}{25} + \frac{7}{25} - \frac{3}{25} = 0.56 = 56\,\%
+    \]
+\end{loesung}
+
+\subsubsection*{Multiplikationssatz für die UND-Verknüpfung von Ereignissen}
+\begin{align}
+    &P(A\;\mathrm{und}\;B)=P(A\land B) = P(A) + P(B) \qquad \text{(A, B einander ausschließend)} \\
+    &P(A\;\mathrm{und}\;B)=P(A\land B) = P(A) + P(B) - P(B|A) \qquad \text{(A, B beliebig)}
+\end{align}
+Hierbei ist $P(B|A)$ die bedingte Wahrscheinlichkeit, also die Wahrscheinlichkeit, dass $A$ eintritt unter der Voraussetzung, dass $B$ schon eingetreten ist. Sie wird durch den Satz von Bayes formuliert.
+\subsubsection*{Satz von Bayes für bedingte Wahrscheinlichkeiten}
+\begin{equation}
+    P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)} = \frac{P(A \land B)}{P(B)}
+\end{equation}
+
+\subsubsection{Baumdiagramme}
+Baumdiagramme sind ein Werkzeug, um mehrstufige Zufallsexperimente übersichtlich darzustellen. Jede Verzweigung steht für einen möglichen Ausgang mit zugehöriger Wahrscheinlichkeit.
+\subsubsection*{1. Pfadregel: UND-Verknüpfung}
+Man erhält die Wahrscheinlichkeit für einen gewissen Pfad, indem man die Wahrscheinlichkeiten entlang des Pfades multipliziert.
+\subsubsection*{2. Pfadregel: ODER-Verknüpfung}
+Die Wahrscheinlichkeit eines Ereignisses, das sich aus mehreren Ereignissen zusammensetzt, erhält man durch Addition der zugehörigen Pfadwahrscheinlichkeiten
+
+\pagebreak
+\begin{bsp}
+In einer Schüssel liegen 4 rote, 3 blaue und 2 grüne Kugeln. Es wird zwei mal eine Kugel gezogen ohne dass sie zurückgelegt wird. \\
+\vspace{12pt}
+\\
+\definecolor{myred}{RGB}{220,50,50}
+\definecolor{myblue}{RGB}{70,110,200}
+\definecolor{mygreen}{RGB}{60,160,90}
+\begin{tikzpicture}[
+  ball/.style={circle, minimum size=9mm, inner sep=0pt, draw=black, very thick},
+  smallball/.style={circle, minimum size=6mm, inner sep=0pt, draw=black, very thick},
+  prob/.style={font=\small},
+  >=Stealth,
+  line/.style={thick, shorten >=6pt}
+]
+    %%%% Top container: pyramid of balls (2 green / 3 blue / 4 red) %%%%
+    \node (container) at (0, -.75) {}; % invisible center node for arrow origin
+    
+    % Draw a bowl shape around pyramid
+    \draw[thick] (-1.5,0.3) to[out=-70,in=-110,looseness=1.2] (1.5,0.3);
+    
+    % --- consistent spacing pyramid ---
+    % vertical step = 0.35 cm, horizontal step = 0.4 cm
+    
+    % Top row (greens)
+    \node[smallball, fill=mygreen] at (-0.2,0.75) {};
+    \node[smallball, fill=mygreen] at ( 0.2,0.75) {};
+    
+    % Middle row (blues)
+    \node[smallball, fill=myblue] at (-0.4,0.40) {};
+    \node[smallball, fill=myblue] at ( 0.0,0.40) {};
+    \node[smallball, fill=myblue] at ( 0.4,0.40) {};
+    
+    % Bottom row (reds)
+    \node[smallball, fill=myred] at (-0.6,0.05) {};
+    \node[smallball, fill=myred] at (-0.2,0.05) {};
+    \node[smallball, fill=myred] at ( 0.2,0.05) {};
+    \node[smallball, fill=myred] at ( 0.6,0.05) {};
+    
+    %%%% erste Ebene: 3 Kugeln (erste Ziehung) %%%%
+    \node[ball, fill=myred]  (R1) at (-6,-2.8) {};
+    \node[ball, fill=myblue] (B1) at (0,-2.8)  {};
+    \node[ball, fill=mygreen](G1) at (6,-2.8)  {};
+    
+    % arrows from container to first layer
+    \draw[line,->] (container) -- (R1) node[pos=0.45,above left,prob] 
+    {
+        \begin{tabular}{c}
+            \small $P(\fatdot[red][3pt][0.1ex]$) \\
+            \small $4/9$
+        \end{tabular}
+    };
+    \draw[line,->] (container) -- (B1) node[pos=0.5,left,prob]      {\small $3/9$};
+    \draw[line,->] (container) -- (G1) node[pos=0.45,above right,prob]{\small $2/9$};
+    
+    %%%% zweite Ebene: je 3 Kinder (ohne Zurücklegen) %%%%
+    \def\levely{-6.6}
+    % Gruppe 1 (unter R1)
+    \node[ball, fill=myred]  (R1R2) at (-8,\levely) {};
+    \node[ball, fill=myblue] (R1B2) at (-6,\levely) {};
+    \node[ball, fill=mygreen](R1G2) at (-4,\levely) {};
+    
+    \draw[line,->] (R1) -- (R1R2) node[midway,left,prob]  {\small $3/8$};
+    \draw[line,->] (R1) -- (R1B2) node[midway,left,prob] {\small $3/8$};
+    \draw[line,->] (R1) -- (R1G2) node[pos=0.4,right,prob]
+    {
+        \begin{tabular}{c}
+            \small $P(\fatdot[mygreen][3pt][-0.6ex] | \fatdot[red][3pt][-0.6ex])$ \\[1pt]
+            \small $2/8$
+        \end{tabular}
+    };
+    
+    % Gruppe 2 (unter B1)
+    \node[ball, fill=myred]  (B1R2) at (-2,\levely) {};
+    \node[ball, fill=myblue] (B1B2) at ( 0,\levely) {};
+    \node[ball, fill=mygreen](B1G2) at ( 2,\levely) {};
+    
+    \draw[line,->] (B1) -- (B1R2) node[midway,left,prob]  {\small $4/8$};
+    \draw[line,->] (B1) -- (B1B2) node[midway,left,prob] {\small $2/8$};
+    \draw[line,->] (B1) -- (B1G2) node[midway,right,prob] {\small $2/8$};
+    
+    % Gruppe 3 (unter G1)
+    \node[ball, fill=myred]  (G1R2) at (4,\levely) {};
+    \node[ball, fill=myblue] (G1B2) at (6,\levely) {};
+    \node[ball, fill=mygreen](G1G2) at (8,\levely) {};
+    
+    \draw[line,->] (G1) -- (G1R2) node[midway,left,prob] {\small $4/8$};
+    \draw[line,->] (G1) -- (G1B2) node[midway,left,prob] {\small $3/8$};
+    \draw[line,->] (G1) -- (G1G2) node[midway,right,prob] {\small $1/8$};
+    
+\end{tikzpicture}
+
+
+\vspace{14pt}
+Wahrscheinlichkeit für zwei rote Kugeln:
+\[
+    P(\fatdot[myred][3pt]\fatdot[myred][3pt]) = \frac{4}{9} \cdot \frac{3}{8} = \frac{1}{6} = 0.1\dot{6}
+\]
+Wahrscheinlichkeit für eine blaue und eine grüne Kugel:
+\[
+    P(\fatdot[myred][3pt] \fatdot[myblue][3pt] \text{ oder } \fatdot[myblue][3pt] \fatdot[myred][3pt]) = 
+        P(\fatdot[myred][3pt] \fatdot[myblue][3pt]) + P(\fatdot[myblue][3pt] \fatdot[myred][3pt]) = 
+        \frac{4}{9} \cdot \frac{3}{8} + \frac{3}{9} \cdot \frac{4}{8} = 
+        \frac{1}{6} + \frac{1}{6} = \frac{1}{3} = 0.\dot{3}
+\]
+
+Wahrscheinlichkeit keine grüne Kugel zu ziehen
+
+\[
+    P(\text{nicht }\fatdot[mygreen][3pt]) = 
+    \frac{4}{9} \cdot \frac{3}{8} + 
+    \frac{4}{9} \cdot \frac{3}{8} + 
+    \frac{3}{9} \cdot \frac{2}{8} + 
+    \frac{3}{9} \cdot \frac{2}{8}  
+    \thickapprox 0.78
+\]
+
+Oder über die Gegenwahrscheinlichkeit ausgedrückt
+
+\[
+    P(\text{nicht }\fatdot[mygreen][3pt]) = 
+        1 - P(\text{mind. 1 mal }\fatdot[mygreen][3pt]) = 
+        1 - \left( 
+            \frac{4}{9}\cdot\frac{2}{8} + 
+            \frac{3}{9}\cdot\frac{2}{8} + 
+            \frac{2}{9}\cdot\frac{4}{8} + 
+            \frac{2}{9}\cdot\frac{3}{8} + 
+            \frac{2}{9}\cdot\frac{1}{8} 
+        \right) 
+        \thickapprox 0.78
+\]
+
+
+\end{bsp}
+
+\subsection{Wahrscheinlichkeitsverteilungen}
+Bevor man über Wahrscheinlichkeitsverteilungen sprechen kann, muss man zuerst den Begriff der \emph{Zufallsvariable} definieren. \\
+Die \textbf{Zufallsvariable $X$} ordnet jedem möglichen Ergebnis eines Zufallsexperiments eine reelle Zahl zu. Eine \emph{diskrete Zufallsvariable} nimmt abzählbar viele Werte an (z.B. Binomialverteilung). Eine \emph{stetige Zufallsvariable} kann unendlich viele Werte annehmen (z.B. Normalverteilung).
+\subsubsection{diskrete Wahrscheinlichkeitsverteilungen}
+Die \textbf{Wahrscheinlichkeitsfunktion $f(x)$} ordnet jedem Wert der Zufallsvariable $X$ die Wahrscheinlichkeit zu, dass genau dieser Wert erreicht wird:
+\begin{equation}
+    f(x)=P(X=x)
+\end{equation}
+Die \textbf{Verteilungsfunktion $F(x)$} ordnet jedem Wert der Zufallsvariable $X$ die Wahrscheinlichkeit zu, dass \emph{maximal} dieser Wert erreicht wird.
+\begin{equation}
+    F(X)=P(X \leq x) = \sum_{k=0}^x f(x_k)
+\end{equation}
+Der Wert, den eine Zufallsvariable im Mittel annimmt, ist der \textbf{Erwartungswert}.
+\begin{equation}
+    E(X) = \sum_{i=0}^n x_i \cdot P(X=x_i) = \sum_{i=0}^n x_i \cdot f(x_i)
+\end{equation}
+
+
+\begin{bsp}
+    Wahrscheinlichkeitsverteilung eines Würfels \\
+    Die Zufallsvariable beschreibt die geworfene Augenzahl eines Würfels und kann daher nur diskrete Werte annehmen. \\ 
+    Die Wahrscheinlichkeitsfunktion ordnet jeder möglichen Augenzahl die Wahrscheinlichkeit zu, mit der sie auftritt. \\
+    Die Verteilungsfunktion gibt für jede Augenzahl die Wahrscheinlichkeit an, dass beim Wurf höchstens diese Augenzahl erzielt wird.
+    
+   \begin{center}    
+    \setlength{\tabcolsep}{10pt}    
+    \renewcommand{\arraystretch}{1.3}    
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}    
+        \hline    
+        Ergebnis & \dice{1} & \dice{2} & \dice{3} & \dice{4} & \dice{5} & \dice{6} \\    
+        \hline    
+        Zufallsvariable (Augenzahl) $X$ & 1 & 2 & 3 & 4 & 5 & 6 \\    
+        \hline    
+    \end{tabular}    
+    \end{center}
+    \vspace{10pt}
+
+    \begin{tikzpicture}
+        \begin{axis}[
+            name=plot1,
+            width=7cm,
+            height=6cm,
+            xlabel={$x$},
+            ylabel={$f(x)$},
+            title={Wahrscheinlichkeitsfunktion},
+            ymin=0, ymax=0.25,
+            xmin=0, xmax=7,
+            xtick={1,2,3,4,5,6},
+            ytick={0,0.08333,0.16667, 0.3},
+            yticklabels={0, $\frac{1}{12}$, $\frac{1}{6}$},
+            grid=major,
+            axis lines=middle,
+        ]
+        % Gleichverteilung: P(X=k) = 1/6 für k=1,...,6
+        \addplot[ybar, bar width=0.1cm, fill=accent, draw=accent] 
+            coordinates {(1,0.16667) (2,0.16667) (3,0.16667)
+                         (4,0.16667) (5,0.16667) (6,0.16667)};
+        \end{axis}
+        
+        % Verteilungsfunktion F(x) - Würfel
+        \begin{axis}[
+            at={(plot1.east)},
+            anchor=west,
+            xshift=1.5cm,
+            width=7cm,
+            height=6cm,
+            xlabel={$x$},
+            ylabel={$F(x)$},
+            title={Verteilungsfunktion},
+            ymin=0, ymax=1.1,
+            xmin=0, xmax=7,
+            xtick={1,2,3,4,5,6},
+            ytick={0, 0.16667, 0.33333, 0.5, 0.66667, 0.83333, 1.0},
+            yticklabels={0, $\frac{1}{6}$, $\frac{2}{6}$, $\frac{3}{6}$,
+                           $\frac{4}{6}$, $\frac{5}{6}$, 1},
+            grid=major,
+            axis lines=middle,
+        ]
+        % Treppenfunktion für Würfel
+        \addplot[const plot, ultra thick, accent, jump mark left] 
+            coordinates {(0,0) (1,0.16667) (2,0.33333) (3,0.5)
+                         (4,0.66667) (5,0.83333) (6,1.0) (7,1.0)};
+        % Geschlossene Punkte
+        \addplot[only marks, mark=*, accent] 
+            coordinates {(1,0.16667) (2,0.33333) (3,0.5)
+                         (4,0.66667) (5,0.83333) (6,1.0)};
+        % Offene Punkte
+        \addplot[only marks, mark=o, accent] 
+            coordinates {(1,0) (2,0.16667) (3,0.33333)
+                         (4,0.5) (5,0.66667) (6,0.83333)};
+        \end{axis}
+    \end{tikzpicture}
+
+    Wenn man nun wissen möchte, wie hoch die Wahrscheinlichkeit ist einen \emph{6er} zu Würfeln, kann man das in der Verteilungsfunktion ablesen:
+    \[ 
+        P(X=6) = f(6) = \frac{1}{6}
+    \]
+    Möchte man wissen, wie hoch die Wahrscheinlichkeit ist, dass die Augenzahl höchstens 2 ist kann man entweder die Wahrscheinlichkeiten der Wahrscheinlichkeitsfunktion addieren oder die Verteilungsfunktion verwenden:
+    \begin{align*}
+        &P(X \leq 2) = P(X=1) + P(X=2) = f(1) + f(2) = \frac{1}{6} + \frac{1}{6} = \frac{1}{3} \\
+        &P(X\leq 2) = F(2) = \frac{2}{6} = \frac{1}{3}
+    \end{align*}
+    Möchte man die Wahrscheinlichkeit wissen, eine Zahl zwischen 2 und 4 zu würfeln, kann man wieder $f(x)$ oder $F(x)$ verwenden:
+    \begin{align*}
+        &P(2 \leq X \leq 4) = f(2) + f(3) + f(4) = \frac{1}{6} + \frac{1}{6} + \frac{1}{6} = \frac{1}{2} \\
+        &P(2 \leq X \leq 4) = F(4) - F(1) = \frac{4}{6} - \frac{1}{6} = \frac{1}{2}
+    \end{align*}
+    Hierbei beinhaltet $F(4)$ alle Wahrscheinlichkeiten der Zahlen 1, 2, 3, 4 und $F(1)$ beinhaltet die Wahrscheinlichkeit der Zahl 1.
+\end{bsp}
+    
+
+\subsubsection{Binomialverteilung}
+Die Binomialverteilung ist einer der wichtigsten diskreten Wahrscheinlichkeitsverteilungen. Sie basiert auf dem \emph{Bernoulli Experiment}, welches folgende Bedingungen erfüllen muss:
+\begin{itemize}
+    \item Es gibt genau 2 Ergebnisse: Erfolg und Misserfolg
+    \item Die Wahrscheinlichkeit der Ergebnisse ändert sich bei mehrmaligen durchführen nicht
+    \item Das Experiment kann beliebig oft und unabhängig voneinander wiederholt werden.
+\end{itemize}
+Somit können Bernoulli Experimente immer als \emph{Ziehen mit Zurücklegen} interpretiert werden, da die Wahrscheinlichkeit gleichbleibend sein muss. \\
+Die Binomialverteilung entsteht durch n-faches Wiederholen eines Bernoulli Experiments. Ist $X$ eine binomialverteilte Zufallsvariable, schreibt man:
+\begin{align}
+    X \sim \mathcal{B}(n,p), \qquad n &= \text{Anzahl der Versuche} \\
+                           p &= \text{Erfolgswahrscheinlichkeit} \nonumber
+\end{align}
+Die Wahrscheinlichkeitsfunktion $f(x)$ und die Verteilungsfunktion $F(x)$ der Binomialverteilung sind folgendermaßen definiert.
+\begin{equation}
+    \begin{aligned}
+    f(x) &= \binom{n}{x} p^x (1-p)^{n-x} \\
+    F(x) &= \sum_{k=0}^{x} \binom{n}{k} p^k (1-p)^{n-k}
+    \end{aligned}
+    \qquad
+    \begin{aligned}
+    &X\dots\text{Zufallsvariable (binomialverteilt)} \\
+    &x\dots\text{Anzahl der Erfolge} \\
+    &n\dots\text{Anzahl der Versuche} \\
+    &p\dots\text{Erfolgswahrscheinlichkeit}
+    \end{aligned}
+\end{equation}
+
+\begin{bsp}
+    Eine Münze wird 10 mal geworfen. \\
+    Zuerst werden die Voraussetzungen für die Binomialverteilung überprüft:
+    \begin{itemize}
+        \item Es gibt 2 Ergebnisse: Kopf oder Zahl
+        \item Die Wahrscheinlichkeit Kopf oder Zahl zu werfen ist gleichbleibend
+        \item Der Wurf kann beliebig oft und unabhängig voneinander wiederholt werden
+    \end{itemize}
+
+    Die Anzahl der Versuche ist mit $n=10$ und die Erfolgswahrscheinlichkeit mit $p=0.5$ vorgegeben. \\
+    Wir suchen also die Binomialverteilung:
+    \[
+        X \sim \mathcal{B}(n=10,\, p=0.5) 
+    \]
+    \begin{geogebracode}
+        Ansicht -> Wahrscheinlichkeitsrechner -> Binomialverteilung
+    \end{geogebracode}
+
+    \begin{tikzpicture}
+        % Wahrscheinlichkeitsfunktion f(x) - Würfel
+        \begin{axis}[
+            name=plot1,
+            width=7cm,
+            height=6cm,
+            xlabel={$x$},
+            ylabel={$f(x)$},
+            title={Wahrscheinlichkeitsfunktion},
+            ymin=0, ymax=0.3,
+            xmin=0, xmax=10.5,
+            xtick={0,1,2,3,4,5,6,7,8,9,10}, xticklabels = {0,1,2,3,4,5,6,7,8,9,10},
+            ytick={0,0.05,0.10,0.15,0.20,0.25}, yticklabels = {0,0.05,0.10,0.15,0.20,0.25},
+            grid=major,
+            axis lines=middle,
+        ]
+        \addplot[ybar, bar width=0.3cm, fill=accent, draw=black] coordinates {  
+                    (0,0.0010) (1,0.0098) (2,0.0439) (3,0.1172) (4,0.2051)  
+                    (5,0.2461) (6,0.2051) (7,0.1172) (8,0.0439) (9,0.0098) (10,0.0010)  
+                };  
+        \end{axis}
+        
+        % Verteilungsfunktion F(x) - Würfel
+        \begin{axis}[
+            at={(plot1.east)},
+            anchor=west,
+            xshift=1.5cm,
+            width=7cm,
+            height=6cm,
+            xlabel={$x$},
+            ylabel={$F(x)$},
+            title={Verteilungsfunktion},
+            xmin=0, xmax=11,  
+            ymin=0, ymax=1.05,
+            xtick={0,1,2,3,4,5,6,7,8,9,10},  
+            ytick={0,0.2,0.4,0.6,0.8,1.0},
+            grid=major,
+            axis lines=middle,
+        ]
+        % Stufenfunktion  
+        \addplot[const plot, ultra thick, accent, jump mark left]
+        coordinates {  
+                        (0,0) (1,0.0010) (2,0.0107) (3,0.0547) (4,0.1719) (5,0.3770)  
+                        (6,0.6230) (7,0.8281) (8,0.9453) (9,0.9893) (10,0.9990) (11,1.0000)  
+                    };
+        % Geschlossene Punkte  
+        \addplot[only marks, mark=*, accent]   
+            coordinates {  
+                (1,0.0010) (2,0.0107) (3,0.0547) (4,0.1719) (5,0.3770)  
+                (6,0.6230) (7,0.8281) (8,0.9453) (9,0.9893) (10,0.9990)  
+            };  
+        % Offene Punkte  
+        \addplot[only marks, mark=o, accent]   
+            coordinates {  
+                (1,0) (2,0.0010) (3,0.0107) (4,0.0547) (5,0.1719)  
+                (6,0.3770) (7,0.6230) (8,0.8281) (9,0.9453) (10,0.9893)  
+            };  
+        \end{axis}
+    \end{tikzpicture}
+
+    Möchte man die Wahrscheinlichkeit für eine gewisse Anzahl der Erfolge (wie oft wurde \emph{Kopf} geworfen) wissen, verwendet man die Wahrscheinlichkeitsfunktion. \\
+    Wahrscheinlichkeit für 3 mal \emph{Kopf}:
+    \[
+        P(X=3) = f(3) = \binom{n}{x} p^x (1-p)^{n-x} = \binom{10}{3} 0.5^3 \cdot 0.5^7 = 0.12 \\
+    \]
+    Um die Wahrscheinlichkeit für Bereiche von Ereignissen zu finden, addiert man die Einzelwahrscheinlichkeiten. \\
+    Die Verteilungsfunktion liefert uns alle Wahrscheinlichkeiten bis zu einer gewissen Erfolgsanzahl x aufsummiert. \\
+    Wahrscheinlichkeit für weniger als 4 mal \emph{Kopf}:
+    \begin{align*}
+        P(X<4) &= P(X=1)+P(X=2)+P(X=3) = f(1)+f(2)+f(3) = \\
+               &= \sum_{k=0}^3 P(X=k) = \sum_{k=0}^3 f(k)
+    \end{align*}
+    Wahrscheinlichkeit für 3,4 oder 5 mal \emph{Kopf}:
+    \[
+        P(3 \leq X \leq 5) = f(3) + f(4) + f(5) = 0.57 \\
+    \]
+    Für Bereiche ist es auch sehr nützlich die Verteilungsfunktion zu verwenden.
+    \begin{align*}
+        P(3 \leq X \leq 5) &= F(5) - F(3) = \\
+        &= \sum_{k=0}^{5} \binom{n}{k} 0.5^k (1-0.5)^{10-k} - \sum_{k=0}^{3} \binom{n}{k} 0.5^k (1-0.5)^{10-k} =\\
+        &= \sum_{k=3}^{5} \binom{n}{k} 0.5^k (1-0.5)^{10-k} = 0.56
+    \end{align*}
+    
+\end{bsp}
+
+\pagebreak
+\subsubsection{Normalverteilung}
+Die Normalverteilung ist einer der wichtigsten stetigen Wahrscheinlichkeitsverteilung. \\
+Die Zufallsvariable $X$ ist jetzt stetig und kann unendlich viele Werte annehmen. Dadurch werden viele natürlich Prozesse modelliert: Länge eines Werkstücks, Messfehler, Körpergrößen, \dots \\
+Eine normalverteilte Zufallsvariable $X$ wird durch zwei Parameter beschrieben:
+\begin{itemize}
+  \item den Erwartungswert (Mittelwert) $\mu$,
+  \item die Standardabweichung $\sigma > 0$.
+\end{itemize}
+Die Zufallsvariable $X$ ist normalverteilt:
+\begin{equation}
+    X \sim \mathcal{N}(\mu,\sigma^2)
+\end{equation}
+Die \textbf{Dichtefunktion} der Normalverteilung ist folgendermaßen definiert:
+\begin{equation}
+    f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}
+\end{equation}
+Die Dichtefunktion hat wegen ihrer Form auch den Namen gaußsche Glockenkurve. Beim Erwartungswert $\mu$ hat die Funktion ihr Maximum, und um die Standardabweichung $\sigma$ nach links und nach rechts verschoben befinden sich die Wendepunkte.
+
+\makeatletter
+% schnelle erf-Approximation (A&S 7.1.26)
+\pgfmathdeclarefunction{erf}{1}{%
+  \begingroup
+    \pgfmathparse{#1 > 0 ? 1 : -1}%
+    \edef\sign{\pgfmathresult}%
+    \pgfmathparse{abs(#1)}%
+    \edef\x{\pgfmathresult}%
+    \pgfmathparse{1/(1+0.3275911*\x)}%
+    \edef\t{\pgfmathresult}%
+    \pgfmathparse{%
+      1 - (((((1.061405429*\t -1.453152027)*\t) + 1.421413741)*\t
+      -0.284496736)*\t + 0.254829592)*\t*exp(-(\x*\x))}%
+    \edef\y{\pgfmathresult}%
+    \pgfmathparse{(\sign)*\y}%
+    \pgfmath@smuggleone\pgfmathresult%
+  \endgroup
+}
+
+% Normal-CDF über erf
+\pgfmathdeclarefunction{Phi}{1}{%
+  \pgfmathparse{0.5*(1+erf(#1/sqrt(2)))}%
+}
+\vspace{10pt}
+\noindent
+\begin{minipage}[t]{0.49\textwidth}
+\centering
+\begin{tikzpicture}
+  \begin{axis}[
+    axis y line=middle, axis x line=bottom,
+    xlabel={$x$},
+    title={$Dichtefunktion$},
+    domain=-4.5:4.5,
+    samples=200,
+    ymin=0, ymax=0.5,
+    xmin=-5, xmax=5,
+    width=8cm,
+    height=6cm,
+    xtick={-1,0,1},
+    xticklabels={$\mu-\sigma$, $\mu$,$\mu+\sigma$},
+    ytick={}, yticklabels={},
+  ]
+    \addplot[blue, very thick, smooth] {1/sqrt(2*pi)*exp(-x^2/2)};
+
+    \addplot[black, only marks, mark=*, mark size=2pt]
+      coordinates {(-1, {1/sqrt(2*pi)*exp(-1/2)}) (1, {1/sqrt(2*pi)*exp(-1/2)})};
+
+    \draw[black, dashed] (axis cs:-1,0) -- (axis cs:-1,{1/sqrt(2*pi)*exp(-1/2)});
+    \draw[black, dashed] (axis cs: 1,0) -- (axis cs: 1,{1/sqrt(2*pi)*exp(-1/2)});
+  \end{axis}
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.49\textwidth}
+\centering
+\begin{tikzpicture}
+  % Phi über erf (falls du deine erf-Approximation nutzt, sonst ersetzen)
+  \begin{axis}[
+    axis y line=left, axis x line=bottom,
+    xlabel={$x$},
+    title={$Verteilungsfunktion$},
+    domain=-4.5:4.5,
+    samples=200,
+    ymin=0, ymax=1.1,
+    xmin=-5, xmax=5,
+    width=8cm,
+    height=6cm,
+    xtick={-1,0,1},
+    xticklabels={$\mu-\sigma$, $\mu$,$\mu+\sigma$},
+    ytick={0,0.5,1},
+  ]
+    \addplot[red, very thick, smooth] {0.5*(1+erf(x/sqrt(2)))};
+    \draw[black, dashed] (axis cs:-5,0.5) -- (axis cs:0,0.5);
+    \draw[black, dashed] (axis cs:0,0) -- (axis cs:0,0.5);
+    \addplot[black, only marks, mark=*, mark size=2pt]
+      coordinates {(0,0.5)};
+    
+  \end{axis}
+\end{tikzpicture}
+\end{minipage}
+
+\vspace{20pt}
+\noindent
+Die \textbf{Verteilungsfunktion} $F(x_0)$ gibt an wie wahrscheinlich es ist, dass die normalverteilte Zufallsvariable $X$ höchstens den Wert $x_0$ erreicht.
+\begin{equation}
+    F(x_) = \int_{-\infty}^{x_0} f(x) dx = \frac{1}{\sqrt{\sigma 2\pi}}
+        \int_{-\infty}^{x_0} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}
+\end{equation}
+
+
+\begin{tikzpicture}
+% Erste Grafik: sigma=1
+\begin{axis}[
+    name=plot1,
+    axis lines=middle,
+    xlabel={$x$},
+    title={$\sigma = 1$},
+    domain=-5:5,
+    samples=100,
+    ymin=0,
+    ymax=0.55,
+    xmin=-5,
+    xmax=5,
+    width=6.5cm,
+    height=6cm,
+    xtick={-1,0,1},
+    xticklabels={$\mu-\sigma$,$\mu$,$\mu+\sigma$},
+    ytick={},
+    yticklabels={},
+]
+% Normalverteilung mit sigma=1
+\addplot[blue, very thick, smooth] {1/sqrt(2*pi)*exp(-x^2/2)};
+\end{axis}
+% Erste Grafik: sigma=1.5
+\begin{axis}[
+    name=plot2,
+    at={(plot1.east)},
+    anchor=west,
+    xshift=0.3cm,
+    axis lines=middle,
+    xlabel={$x$},
+    title={$\sigma = 1.5$},
+    domain=-5:5,
+    samples=100,
+    ymin=0,
+    ymax=0.55,
+    xmin=-5,
+    xmax=5,
+    width=6.5cm,
+    height=6cm,
+    xtick={-1.5,0,1.5},
+    xticklabels={},
+    ytick={},
+    yticklabels={},
+]
+% Normalverteilung mit sigma=1.5
+\addplot[blue, very thick, smooth] {1/(1.5*sqrt(2*pi))*exp(-x^2/(2*1.5^2))};
+\node[below, font=\small] at (axis cs:0,0.0) {$\mu-\sigma$};
+\end{axis}
+
+% Zweite Grafik: sigma=0.8
+\begin{axis}[
+    name=plot3,
+    at={(plot2.east)},
+    anchor=west,
+    xshift=0.3cm,
+    axis lines=middle,
+    xlabel={$x$},
+    title={$\sigma = 0.8$},
+    domain=-5:5,
+    samples=100,
+    ymin=0,
+    ymax=0.55,
+    xmin=-5,
+    xmax=5,
+    width=6.5cm,
+    height=6cm,
+    xtick={-0.7,0,0.7},
+    xticklabels={$\mu-\sigma$,$\mu$,$\mu+\sigma$},
+    ytick={},
+    yticklabels={},
+]
+% Normalverteilung mit sigma=0.7
+\addplot[blue, very thick, smooth] {1/(0.8*sqrt(2*pi))*exp(-x^2/(2*0.8^2))};
+\end{axis}
+
+\end{tikzpicture}

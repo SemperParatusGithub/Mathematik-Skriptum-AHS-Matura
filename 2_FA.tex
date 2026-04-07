@@ -1,0 +1,1620 @@
+\section{Funktionale Abhängigkeiten (FA)}
+\subsection{Funktionsbegriff, reelle Funktionen, Darstellungen und Eigenschaften}
+Eine Funktion ist eine Zuordnung, die jedem Element $x$ aus der Definitionsmenge $D$ eine Element $y$ aus der Wertemenge $W$ zuordnet. Eine Funktion wird üblicherweise folgendermaßen angeschrieben:
+\begin{equation}
+    f: D \rightarrow W,\; y=f(x)
+\end{equation}
+Der Begriff Abbildung ist ebenfalls ein gebräuchlicher Name für Funktionen. Oft werden Funktionen mit dem Abbildungspfeil $\mapsto$ dargestellt:
+\begin{equation}
+    f: D \rightarrow W,\; x \mapsto f(x)
+\end{equation}
+Wichtig ist auch zu unterscheiden, ob es sich tatsächlich um eine Funktion handelt. Hierbei ist wichtig zu beachten, dass es zu jedem Element $x$ genau ein Element $y$ gibt. Zur Prüfung kann man eine senkrechte Linie verwenden.
+\vspace{10pt}
+\\
+\noindent
+\begin{minipage}[t]{.33\textwidth}
+\begin{center}
+\begin{tikzpicture}[scale=1.2, >=stealth]
+    \draw[->, thick] (0,0) -- (3,0) node[right] {$x$};
+    \draw[->, thick] (0,0) -- (0,2) node[above] {$y$};
+    % Kurvige Funktion (z.B. kubische Funktion)
+    \draw[accent, ultra thick, domain=0:3, smooth, samples=100]
+        plot (\x, {0.2*(\x-1.5)^3 + 1});
+\end{tikzpicture}
+\captionof*{figure}{eine Funktion}
+\end{center}
+\end{minipage}
+\begin{minipage}[t]{.33\textwidth}
+\begin{center}
+\begin{tikzpicture}[scale=1.2, >=stealth]
+    \draw[->, thick] (0,0) -- (3,0) node[right] {$x$};
+    \draw[->, thick] (0,0) -- (0,2) node[above] {$y$};
+    \draw[accent, ultra thick, domain=0:360, smooth, samples=200]
+        plot ({1.5 + 0.9*cos(\x)}, {1 + 0.7*sin(\x)});
+    \draw[dashed, thick] (1.5,0) -- (1.5,1.9) node[above]{};
+    \fill (1.5,0.3) circle (1.5pt) node[above=2pt] {};
+    \fill (1.5,1.7) circle (1.5pt) node[above=2pt] {};
+\end{tikzpicture}
+\captionof*{figure}{keine Funktion}
+\end{center}
+\end{minipage}
+\begin{minipage}[t]{.33\textwidth}
+\begin{center}
+\begin{tikzpicture}[scale=1.2, >=stealth]
+    \draw[->, thick] (0,0) -- (3,0) node[right] {$x$};
+    \draw[->, thick] (0,0) -- (0,2) node[above] {$y$};
+    \draw[accent, ultra thick, domain=0:360, smooth, samples=200]
+        plot ({1.5 + 0.9*cos(\x)}, {1 + 0.4*sin(2*\x)});
+    \draw[dashed, thick] (1,0) -- (1,1.9) node[above]{};
+    \fill (1,0.63) circle (1.5pt) node[above=2pt] {};
+    \fill (1,1.37) circle (1.5pt) node[above=2pt] {};
+\end{tikzpicture}
+\captionof*{figure}{keine Funktion}
+\end{center}
+\end{minipage}
+\vspace{10pt} \\
+\noindent
+Möchte man den Graph einer Funktion skizzieren, kann es hilfreich sein eine Wertetabelle anzufertigen.
+\begin{bsp}
+    Darstellungsarten von reellen Funktionen: \\
+    Wir untersuchen folgende Funktion:
+    \[
+        f(x)=0{,}5x^2+1
+    \]
+    Zuerst wird eine Wertetabelle angefertigt und daraufhin der Graph der Funktion dargestellt.
+    \begin{center}
+        \begin{minipage}{0.4\textwidth}
+            \centering
+            \begin{tabular}{c|c}
+                $x$ & $f(x)$ \\ \hline
+                $-2$ & $3$ \\
+                $-1$ & $1.5$ \\
+                $0$  & $1$ \\
+                $1$  & $1.5$ \\
+                $2$  & $3$
+            \end{tabular}
+        \end{minipage}
+        \hfill
+        \begin{minipage}{0.55\textwidth}
+            \centering
+            \begin{tikzpicture}
+                \begin{axis}[
+                    axis lines = middle,
+                    xmin = -3, xmax = 3,
+                    ymin = 0,  ymax = 5,
+                    xtick={-2,-1,0,1,2},
+                    ytick={0,1,2,3,4},
+                    samples = 200,
+                    % grid = major,
+                    width = 7cm,
+                    height = 5cm,
+                    xlabel = {$x$},
+                    ylabel = {$y$},
+                    domain = -3:3
+                ]
+                \addplot[accent, ultra thick] {0.5*x^2 + 1};
+                \addplot[  
+                        only marks,  
+                        mark=*,  
+                        mark size=2pt,  
+                        accent  
+                    ] coordinates {  
+                        (-2,3)  
+                        (-1,1.5)  
+                        (0,1)  
+                        (1,1.5)  
+                        (2,3)  
+                    };
+                \end{axis}
+            \end{tikzpicture}
+        \end{minipage}
+    \end{center}
+\end{bsp}
+
+\pagebreak
+\subsubsection{Eigenschaften von Funktionen}
+\subsubsection*{Stetigkeit}
+Eine Funktion $f$ ist stetig wenn sie sprungfrei ist. Das heißt: "Man kann den Graphen der Funktion zeichnen, ohne den Stift abzusetzen".
+\begin{center}
+  \begin{minipage}{0.45\textwidth}
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+        width=7cm, height=5cm,
+        axis lines=middle,
+        xmin=-2.2, xmax=2.2,
+        ymin=-1.1, ymax=3.1,
+        samples=200,
+        xlabel={$x$}, ylabel={$y$},
+        xtick={-2,-1,0,1,2},
+        ytick={-1,0,1,2,3},
+        domain=-2:2
+      ]
+        \addplot[accent, ultra thick] {x^3 - x + 1};
+      \end{axis}
+    \end{tikzpicture}\\[0.5em]
+    \captionof*{figure}{stetige Polynomfunktion}
+  \end{minipage}\hfill
+  \begin{minipage}{0.45\textwidth}
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+        width=7cm, height=5cm,
+        axis lines=middle,
+        xmin=-2.2, xmax=2.2,
+        ymin=-1.1, ymax=3.1,
+        xlabel={$x$}, ylabel={$y$},
+        xtick={-2,-1,0,1,2},
+        ytick={-1,0,1,2,3},
+        domain=-2:2
+      ]
+        % unstetige Funktion mit zwei Sprungstellen, z.B. stückweise
+        \addplot[accent, ultra thick, domain=-2:-0.5] {1};
+        \addplot[accent, ultra thick, domain=-0.5:0.5] {2};
+        \addplot[accent, ultra thick, domain=0.5:2] {0};
+
+        % offene/geschlossene Punkte an den Sprungstellen
+        % bei x = -0.5
+        \addplot[only marks, mark=o, mark size=2pt, accent] coordinates {(-0.5,1)};
+        \addplot[only marks, mark=*, mark size=2pt, accent] coordinates {(-0.5,2)};
+        % bei x = 0.5
+        \addplot[only marks, mark=o, mark size=2pt, accent] coordinates {(0.5,2)};
+        \addplot[only marks, mark=*, mark size=2pt, accent] coordinates {(0.5,0)};
+      \end{axis}
+    \end{tikzpicture}\\[0.5em]
+    \captionof*{figure}{Unstetige Funktion mit Sprungstellen}
+  \end{minipage}
+\end{center}
+
+\vspace{15pt}
+\noindent
+
+\begin{minipage}{0.45\textwidth}
+{
+    \textbf{Monoton steigend (ms)}\\[0.3em]
+    $f$ heißt \emph{monoton steigend} auf einem Intervall $I$ , wenn für alle
+    $x_1,x_2 \in I$ gilt:
+    \begin{equation*}
+        \text{wenn } x_1 < x_2 \text{ gilt: } f(x_1) \le f(x_2).
+    \end{equation*}
+}
+\vspace{0.3em}
+{
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+        width=7cm, height=5cm,
+        axis lines=middle,
+        xmin=-2.2, xmax=2.2,
+        ymin=-1.1, ymax=3.1,
+        samples=200,
+        xlabel={$x$}, ylabel={$y$},
+        xtick={-2,-1,0,1,2},
+        ytick={-1,0,1,2,3},
+        domain=-2:2
+      ]
+        % Beispiel: f(x) = x^3 + 1 (streng steigend, aber hier als Beispiel für mon. steigend)
+        \addplot[accent, ultra thick] {x^3 + 1};
+      \end{axis}
+    \end{tikzpicture}
+}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+{
+    \textbf{Streng monoton steigend (sms)}\\[0.3em]
+    $f$ heißt \emph{monoton steigend} auf einem Intervall $I$ , wenn für alle
+    $x_1,x_2 \in I$ gilt:
+    \begin{equation*}
+        \text{wenn } x_1 < x_2 \text{ gilt: } f(x_1) < f(x_2).
+    \end{equation*}
+}
+\vspace{0.3em}
+{
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+        width=7cm, height=5cm,
+        axis lines=middle,
+        xmin=-2.2, xmax=2.2,
+        ymin=-1.1, ymax=3.1,
+        samples=200,
+        xlabel={$x$}, ylabel={$y$},
+        xtick={-2,-1,0,1,2},
+        ytick={-1,0,1,2,3},
+        domain=-2:2
+      ]
+        % Beispiel: f(x) = e^x
+        \addplot[accent, ultra thick] {exp(x)/2};
+      \end{axis}
+    \end{tikzpicture}
+}
+\end{minipage}
+
+\vspace{1em}
+
+\begin{minipage}{0.45\textwidth}
+{
+    \textbf{Monoton fallend (mf)}\\[0.3em]
+    $f$ heißt \emph{monoton fallend} auf einem Intervall $I$ , wenn für alle
+    $x_1,x_2 \in I$ gilt:
+    \begin{equation*}
+        \text{wenn } x_1 < x_2 \text{ gilt: } f(x_1) \geq f(x_2).
+    \end{equation*}
+}
+\vspace{0.3em}
+{
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+        width=7cm, height=5cm,
+        axis lines=middle,
+        xmin=-2.2, xmax=2.2,
+        ymin=-1.1, ymax=3.1,
+        samples=200,
+        xlabel={$x$}, ylabel={$y$},
+        xtick={-2,-1,0,1,2},
+        ytick={-1,0,1,2,3},
+        domain=-2:2
+      ]
+        % Beispiel: f(x) = -x^2 + 2 (nicht streng, da Scheitelpunkt)
+        \addplot[accent, ultra thick] {-x^3 + 1};
+      \end{axis}
+    \end{tikzpicture}
+}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+{
+    \textbf{Streng monoton fallend (smf)}\\[0.3em]
+    $f$ heißt \emph{streng monoton fallend} auf einem Intervall $I$ , wenn für alle
+    $x_1,x_2 \in I$ gilt:
+    \begin{equation*}
+        \text{wenn } x_1 < x_2 \text{ gilt: } f(x_1) > f(x_2).
+    \end{equation*}
+}
+\vspace{0.3em}
+{
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+        width=7cm, height=5cm,
+        axis lines=middle,
+        xmin=-2.2, xmax=2.2,
+        ymin=-1.1, ymax=3.1,
+        samples=200,
+        xlabel={$x$}, ylabel={$y$},
+        xtick={-2,-1,0,1,2},
+        ytick={-1,0,1,2,3},
+        domain=-2:2
+      ]
+        % Beispiel: f(x) = -e^x
+        \addplot[accent, ultra thick] {-exp(x)/2 + 2};
+      \end{axis}
+    \end{tikzpicture}
+}
+\end{minipage}
+
+\pagebreak
+
+\subsubsection*{Lokale Extrempunkte, Krümmung und Wendepunkte}
+Ein Punkt $x_0$ hei{\ss}t \textbf{lokales Maximum}, wenn $f(x_0)$ \emph{in einer Umgebung} von $x_0$ gr\"o{\ss}er oder gleich allen anderen Funktionswerten ist. \\
+Entsprechend hei{\ss}t $x_0$ \textbf{lokales Minimum}, wenn $f(x_0)$ in einer Umgebung von $x_0$ kleiner oder gleich allen anderen Funktionswerten ist. \vspace{5pt} \\
+Man sagt, die Funktion ist in einem Intervall \textbf{linksgekrümmt} (positiv gekrümmt, konvex), wenn ihre Tangenten unterhalb des Graphen verlaufen, und \textbf{rechtsgekrümmt} (negativ gekrümmt, konkav), wenn ihre Tangenten oberhalb des Graphen verlaufen.\vspace{5pt} \\
+Ein Punkt $x_0$ heißt \textbf{Wendepunkt} einer Funktion $f$, wenn sich dort das Krümmungsverhalten der Funktion ändert, also z.B.\ von „linksgekrümmt“ zu „rechtsgekrümmt“ oder umgekehrt.
+
+\begin{center}  
+  \begin{tikzpicture}  
+    \begin{axis}[  
+      width=0.7\textwidth,  
+      axis lines=middle,  
+      xmin=-2.2, xmax=2.2,  
+      ymin=-1.2, ymax=4.2,  
+      samples=200,  
+      xlabel={$x$}, ylabel={$y$},  
+      xtick={-2,-1,0,1,2},  
+      ytick={-1,0,1,2,3,4},  
+      domain=-2:2  
+    ]  
+      % Polynom 3. Grades mit Max und Min, z.B. f(x) = x^3 - 3x  
+      \addplot[accent, ultra thick] {x^3 - 3*x + 1};  
+  
+      % Lokales Maximum bei x = -1  
+      \addplot[only marks, mark=*, mark size=2pt, black] coordinates {(-1,3)};  
+      \node[above left, black] at (axis cs:-1,3) {Max};  
+  
+      % Lokales Minimum bei x = 1  
+      \addplot[only marks, mark=*, mark size=2pt, black] coordinates {(1,-1)};  
+      \node[above=2pt, black] at (axis cs:1,-1) {Min};  
+
+      % Wendepunkt bei x = 0
+      \addplot[only marks, mark=*, mark size=2pt, black] coordinates {(0,1)};  
+      \node[above right, black] at (axis cs:0,1) {WP};  
+
+      % Krümmungspfeile
+      \draw [->, ultra thick] (-1.5,1) .. controls (-1.2,2) and (-0.8,2) .. (-0.5,1);
+      \draw [->, ultra thick] (0.5,1) .. controls (0.8,0) and (1.2,0) .. (1.5,1);
+
+      \node[] at (axis cs:-1,1.2) {\textbf{$-$}};
+      \node[] at (axis cs:1,0.8) {\textbf{$+$}};
+      
+    \end{axis}  
+  \end{tikzpicture}  
+\end{center}
+
+\vspace{10pt}
+
+\begin{center}  
+  \begin{minipage}[t]{0.45\textwidth}  
+    \textbf{Achsensymmetrie zur $y$-Achse}\\[0.3em]  
+    Eine Funktion heißt \emph{achsensymmetrisch zur $y$-Achse}, wenn ihr Graph an der $y$-Achse spiegeln lässt.
+    \[  
+      f(-x) = f(x)
+    \]  
+  
+    \vspace{0.5em}  
+    {
+        \centering
+        \begin{tikzpicture}  
+          \begin{axis}[  
+            width=\linewidth,  
+            axis lines=middle,  
+            xmin=-4.4, xmax=4.4,  
+            ymin=-1.4, ymax=5.4,  
+            samples=200,  
+            xlabel={$x$}, ylabel={$y$},  
+            xtick={-4,-2,0,2,4},  
+            ytick={-1,0,1,2,3,4,5},  
+            domain=-4:4
+          ]  
+            \addplot[accent, ultra thick] {x^2};    
+            \addplot[accent2, ultra thick] {cos(deg(x)) + 2};  
+          \end{axis}  
+    \end{tikzpicture}  
+    }
+  \end{minipage}\hfill  
+  \begin{minipage}[t]{0.45\textwidth}  
+    \textbf{Punktsymmetrie zum Ursprung}\\[0.3em]  
+    Eine Funktion heißt \emph{punktsymmetrisch zum Ursprung}, wenn sich ihr Graph durch den Ursprung spiegeln lässt.
+    \[  
+      f(-x) = -f(x)
+    \]  
+  
+    \vspace{0.5em}  
+    {
+        \centering
+        \begin{tikzpicture}  
+          \begin{axis}[  
+            width=\linewidth,  
+            axis lines=middle,  
+            xmin=-4.4, xmax=4.4,  
+            ymin=-4.4, ymax=4.4,  
+            samples=200,  
+            xlabel={$x$}, ylabel={$y$},  
+            xtick={-4,-2,0,2,4},  
+            ytick={-4,-2,0,2,4},  
+            domain=-4:4,  
+            legend style={at={(0.02,0.98)},anchor=north west, font=\scriptsize}  
+          ]  
+            \addplot[accent, ultra thick] {x^3/4};    
+            \addplot[accent2, ultra thick] {2*sin(deg(x))};  
+          \end{axis}  
+        \end{tikzpicture}  
+    }
+  \end{minipage}  
+\end{center}
+
+\subsection{Lineare Funktionen}
+Lineare Funktionen sind Funktionen, dereren Graph eine Gerade ist:
+\begin{align}
+    f(x) = k x + d, \qquad   k &= \text{Steigung} \\
+                            d &= \text{Ordinatenabschnitt} \nonumber
+\end{align}
+Die Steigung $k$ kann über das Steigungsdreieck ermittelt werden:
+\begin{equation}
+    k = \frac{\Delta y}{\Delta x}
+\end{equation}
+Mit den trigonometrischen Formeln kann auch der \emph{Steigungswinkel} berechnet werden:
+\begin{gather}
+    \tan{\alpha} = \frac{\Delta y}{\Delta x} = k \\[5pt]
+    \alpha = \arctan{\left( \frac{\Delta y}{\Delta x} \right)} = \arctan{k}
+\end{gather}
+Der Ordinatenabschnitt $d$ ist der Schnittpunkt der Geraden mit der $y$-Achse.
+
+\begin{bsp}
+    Es ist die Lineare Funktion zwischen den zwei Punkten \(A(1,2),\;B(3,3)\) gesucht. \\
+    Zuerst wird die Steigung berechnet:
+    \begin{align*}
+        \Delta y &= B_y - A_y = 3 - 2 = 1 \\
+        \Delta x &= B_x - A_x = 3 - 1 = 2 \\[5pt]
+        k &= \frac{\Delta y}{\Delta x} = \frac{1}{2} = 0.5
+    \end{align*}
+    Nachdem das $k$ berechnet wurde kann ein Punkt ($A$ oder $B$) eingesetzt werden um den Ordinatenabschnitt $d$ zu berechnen.
+    \begin{align*}
+        A_y &= 0.5 \cdot A_x + d \\
+        2 &= 0.5 \cdot 1 + d \\
+        d &= 1.5
+    \end{align*}
+    Die Funktionsgleichung lautet also:
+    \begin{equation*}
+        f(x) = 0.5 x + 1.5
+    \end{equation*}
+    Der Graph sieht wie folgt aus:
+
+    \begin{center}
+    \begin{tikzpicture}
+    \begin{axis}[
+        axis lines=middle,
+        xmin=-1.5, xmax=5,
+        ymin=-0.9, ymax=4.4,
+        xlabel={$x$},
+        ylabel={$y$},
+        xtick={-1,0,1,2,3,4},
+        ytick={0,1,2,3,4},
+        width=10cm,
+        height=6.5cm,
+        enlargelimits=false,
+        axis line style={latex-latex},
+    ]
+    
+        % Gerade f(x) = 0.5x + 1.5
+        \addplot[ultra thick, accent] coordinates {(-1,1) (4,3.5)};
+        \node[above right] at (axis cs:4,3.5) {\textcolor{accent}{$f(x)$}};
+    
+        % Punkte A(1,2) und B(3,3)
+        \addplot[only marks, mark=*, mark size=2pt] coordinates {(1,2) (3,3)};
+        \node[above=4pt] at (axis cs:1,2) {$A(1,2)$};
+        \node[above=4pt] at (axis cs:3,3) {$B(3,3)$};
+    
+        % Steigungsdreieck zwischen A und B
+        \addplot[thick] coordinates {(1,2) (3,2)}; % Δx
+        \addplot[thick] coordinates {(3,2) (3,3)}; % Δy
+    
+        % Beschriftungen Δx und Δy
+        \node[anchor=north] at (axis cs:2,2) {$\Delta x = 2$};
+        \node[anchor=west] at (axis cs:3,2.5) {$\Delta y = 1$};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \end{center}
+\end{bsp}
+
+\subsection{Potenzfunktionen}
+Potenzfunktionen sind Funktionen der Form:
+\begin{equation}
+    f(x) = ax^z + b, \quad z \in \mathbb{Z}
+\end{equation}
+Hierbei bestimmt $z$ den Grad der Funktion. Der Parameter $a$ verursacht eine Streckung, Stauchung oder Inversion, und der Parameter $b$ eine Verschiebung in $y$-Richtung. \\
+Abhängig von $n$ kann man vier Fälle unterscheiden.
+% 1. Zeile: Parabeln
+\vspace{14pt}
+\\
+\noindent
+% 1. Zeile, 1. Spalte: n gerade, positiv (x^2, x^4)
+\begin{minipage}[t]{0.48\textwidth}
+  \centering
+  \textbf{Parabeln: $n$ gerade, positiv}
+  \[
+    x^2,\, x^4,\,\dots
+  \]
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=7cm,
+      height=5cm,
+      axis lines=middle,
+      xmin=-2.2, xmax=2.2,
+      ymin=-1, ymax=5.5,
+      samples=200,
+      domain=-2:2,
+      xtick={-2,-1,0,1,2},
+      ytick={0,1,2,3,4,5},
+      axis line style={latex-latex},
+    ]
+      \addplot[accent, ultra thick] {x^2};
+      \addplot[accent2, ultra thick] {x^4};
+    \end{axis}
+  \end{tikzpicture}
+\end{minipage}
+\hfill
+% 1. Zeile, 2. Spalte: n ungerade, positiv (x^3, x^5)
+\begin{minipage}[t]{0.48\textwidth}
+  \centering
+  \textbf{Parabeln: $n$ ungerade, positiv}
+    \[
+        x^3,\, x^5,\,\dots
+    \]
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=7cm,
+      height=5cm,
+      axis lines=middle,
+      xmin=-2.2, xmax=2.2,
+      ymin=-5.5, ymax=5.5,
+      samples=200,
+      domain=-2:2,
+      xtick={-2,-1,0,1,2},
+      ytick={-4,-2,0,2,4},
+      axis line style={latex-latex},
+    ]
+      \addplot[accent, ultra thick] {x^3};
+      \addplot[accent2, ultra thick] {x^5};
+    \end{axis}
+  \end{tikzpicture}
+\end{minipage}
+\vspace{2cm}
+% 2. Zeile: Hyperbeln
+% 2. Zeile, 1. Spalte: n gerade, negativ (x^{-2}, x^{-4})
+\begin{minipage}[t]{0.48\textwidth}
+  \centering
+  \textbf{Hyperbeln: $n$ gerade, negativ}
+  \[
+    x^{-2}=\frac{1}{x^2},\,x^{-4}=\frac{1}{x^4},\,\dots
+  \]
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=7cm,
+      height=5cm,
+      axis lines=middle,
+      xmin=-3.4, xmax=3.4,
+      ymin=-1, ymax=5.5,
+      samples=200,
+      xtick={-3,-2,-1,0,1,2,3},
+      ytick={0,1,2,3,4,5},
+      axis line style={latex-latex},
+    ]
+      % x^{-2}
+      \addplot[accent, ultra thick, domain=-3:-0.3] {x^-2};
+      \addplot[accent, ultra thick, domain=0.3:3]   {x^-2};
+      % x^{-4}
+      \addplot[accent2, ultra thick, domain=-3:-0.3] {x^-4};
+      \addplot[accent2, ultra thick, domain=0.3:3]   {x^-4};
+    \end{axis}
+  \end{tikzpicture}
+\end{minipage}
+\hfill
+% 2. Zeile, 2. Spalte: n ungerade, negativ (x^{-3}, x^{-5})
+\begin{minipage}[t]{0.48\textwidth}
+  \centering
+  \textbf{Hyperbeln: $n$ ungerade, negativ}
+  \[
+    x^{-3}=\frac{1}{x^3},\,x^{-5}=\frac{1}{x^5},\,\dots
+  \]
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=7cm,
+      height=5cm,
+      axis lines=middle,
+      xmin=-3.4, xmax=3.4,
+      ymin=-5.2, ymax=5.2,
+      samples=200,
+      xtick={-3,-2,-1,0,1,2,3},
+      ytick={-4,-2,0,2,4},
+      axis line style={latex-latex},
+    ]
+      % x^{-3}
+      \addplot[accent, ultra thick, domain=-3:-0.3] {x^-3};
+      \addplot[accent, ultra thick, domain=0.3:3]   {x^-3};
+      % x^{-5}
+      \addplot[accent2, ultra thick, domain=-3:-0.3] {x^-5};
+      \addplot[accent2, ultra thick, domain=0.3:3]   {x^-5};
+    \end{axis}
+  \end{tikzpicture}
+\end{minipage}
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+  \centering
+  \textbf{Streckung, Stauchung und Spiegelung} \\[0.5em]
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=9cm,
+      height=7cm,
+      axis lines=middle,
+      xmin=-3.4, xmax=3.4,
+      ymin=-10, ymax=10,
+      samples=200,
+      xtick={-3,-2,-1,0,1,2,3},
+      ytick={-8,-4,0,4,8},
+      axis line style={latex-latex},
+    ]
+      \addplot[accent, very thick, domain=-3:3] {2*x^2} node[pos=0.75, left] {$2x^2$};
+      \addplot[accent2, very thick, domain=-3:3] {x^2} node[pos=0.9, left] {$x^2$};
+      \addplot[accent3, very thick, domain=-3:3] {0.5*x^2} node[pos=0.95, below=5pt] {$0.5x^2$};
+      \addplot[accent4, very thick, domain=-3:3] {-x^2} node[pos=0.85, right] {$-x^2$};
+    \end{axis}
+  \end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+  \centering
+  \textbf{Verschiebung in $y$-Richtung} \\[0.5em]
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=9cm,
+      height=7cm,
+      axis lines=middle,
+      xmin=-3.4, xmax=3.4,
+      ymin=-6, ymax=6,
+      samples=200,
+      xtick={-3,-2,-1,0,1,2,3},
+      ytick={-4,-2,-1,0,1,2,4},
+      axis line style={latex-latex},
+    ]
+      \addplot[accent, very thick, domain=-3:3] {x^2 + 1} node[pos=0.75, left] {$x^2+1$};
+      \addplot[accent2, very thick, domain=-3:3] {x^2} node[pos=0.7, right] {$x^2$};
+      \addplot[accent3, very thick, domain=-3:3] {0.5*x^2 - 1} node[pos=0.9, below=15pt] {$0.5x^2 - 1$};
+      \addplot[accent4, very thick, domain=-3:3] {-x^2 + 0.5} node[pos=0.68, right] {$-x^2 + 0.5$};
+    \end{axis}
+  \end{tikzpicture}
+\end{minipage}
+
+\pagebreak
+\subsection{Polynomfunktionen}
+Funktionen der Form:
+\begin{equation}
+    f(x) = a_0 x^0 + a_1 x^1 + a_2 x^2 + \dots + a_n x^n
+\end{equation}
+heißen Polynomfunktionen $n$-ten Grades. Die höchst vorkommende Potenz bestimmt dabei immer den Grad der Polynomfunktion.\\
+
+\noindent
+% Row: 0. Grades
+\noindent
+\begin{minipage}[c]{0.48\textwidth}
+\textbf{Polynomfunktion 0. Grades}
+\begin{equation}
+    f(x) = a_0 x^0 = a_0
+\end{equation}
+Polynomfunktionen 0. Grades sind konstante Funktionen. Sie liefern für jeden $x$-Wert den $y$-Wert $a_0$.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.48\textwidth}
+\begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[
+          width=7cm,
+          height=5cm,
+          axis lines=middle,
+          samples=200,
+          axis line style={latex-latex},
+          xtick={-4,-2,0,2,4},
+          ytick={-2,-1,0,1,2,3},
+          xmin=-4.5,
+          xmax=4.5,
+          ymin=-2.5,
+          ymax=3.5,
+        ]
+        \addplot[accent, ultra thick, domain=-3.5:3.5]{2}
+        node[pos=0.8, above] {$f_1(x)=2$};
+        \addplot[accent2, ultra thick, domain=-3.5:3.5]{-1}
+        node[pos=0.8, below] {$f_2(x)=-1$};
+        \end{axis}
+    \end{tikzpicture}
+\end{center}
+\end{minipage}
+
+\vspace{2em}
+
+% Row: 1. Grades
+\noindent
+\begin{minipage}[c]{0.48\textwidth}
+\textbf{Polynomfunktion 1. Grades}
+\begin{align}
+    f(x)&=a_0x^0 + a_1x^1 \\
+        &=k x + d \nonumber
+\end{align}
+Polynomfunktionen 1. Grades sind lineare Funktionen. Sie haben immer genau eine Nullstelle.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.48\textwidth}
+\begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[
+          width=7cm,
+          height=5cm,
+          axis lines=middle,
+          samples=200,
+          axis line style={latex-latex},
+          xtick={-4,-2,0,2,4},
+          ytick={-2,-1,0,1,2,3},
+          xmin=-4.5,
+          xmax=4.5,
+          ymin=-2.5,
+          ymax=3.5,
+        ]
+          \addplot[accent, ultra thick, domain=-3.5:3.5]{0.5*x + 1}
+            node[pos=0.8, below=7pt] {$0.5x+1$};
+        \end{axis}
+    \end{tikzpicture}
+\end{center}
+\end{minipage}
+
+\vspace{2em}
+
+% Row: 2. Grades
+\noindent
+\begin{minipage}[c]{0.48\textwidth}
+\textbf{Polynomfunktion 2. Grades}
+\begin{align}
+    f(x) &= a_0 x^0 + a_1 x^1 + a_2 x^2 \\
+         &= a x^2 + b x + c \nonumber
+\end{align}
+Polynomfunktionen 2. Grades sind \emph{quadratische Funktionen} deren Graph eine Parabel ist. Diese werden in weiterer Folge noch genauer untersucht.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.48\textwidth}
+\begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[
+          width=7cm,
+          height=5cm,
+          axis lines=middle,
+          samples=200,
+          axis line style={latex-latex},
+          xtick={-4,-2,0,2,4},
+          ytick={-2,-1,0,1,2,3},
+          xmin=-4.5,
+          xmax=4.5,
+          ymin=-2.5,
+          ymax=3.5,
+        ]
+        \addplot[accent, ultra thick, domain=-4:4]{x^2-x-1};
+        \addplot[accent2, ultra thick, domain=-3.8:-0.2]{-0.5*x^2-2*x+-2.5};
+        \end{axis}
+    \end{tikzpicture}
+\end{center}
+\end{minipage}
+
+\vspace{2em}
+
+% Row: 3. Grades
+\noindent
+\begin{minipage}[c]{0.48\textwidth}
+\textbf{Polynomfunktion 3. Grades}
+\begin{equation}
+    f(x) = a_0 x^0 + a_1 x^1 + a_2 x^2 + a_3 x^3
+\end{equation}
+Polynomfunktionen 3. Grades haben können maximal 3 Nullstellen haben und haben immer zumindest eine.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.48\textwidth}
+\begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[
+          width=7cm,
+          height=5cm,
+          axis lines=middle,
+          samples=200,
+          axis line style={latex-latex},
+          xtick={-4,-2,0,2,4},
+          ytick={-2,-1,0,1,2,3},
+          xmin=-4.5,
+          xmax=4.5,
+          ymin=-2.5,
+          ymax=3.5,
+        ]
+        \addplot[accent, ultra thick, domain=-4:4]{x^3+x^2-2*x-0.5};
+        \addplot[accent2, ultra thick, domain=-4:4]{-0.1*x^3+0.4*x^2-0.5*x+1};
+        \end{axis}
+    \end{tikzpicture}
+\end{center}
+\end{minipage}
+
+\vspace{2em}
+
+% Row: 4. Grades
+\noindent
+\begin{minipage}[c]{0.48\textwidth}
+\textbf{Polynomfunktion 4. Grades}
+\begin{equation}
+    f(x) = a_0 x^0 + a_1 x^1 + a_2 x^2 + a_3 x^3 + a_4 x^4
+\end{equation}
+Polynomfunktionen 4. Grades haben können maximal 4 Nullstellen haben. Es ist aber auch möglich, dass sie gar keine Nullstelle haben.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.48\textwidth}
+\begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[
+          width=7cm,
+          height=5cm,
+          axis lines=middle,
+          samples=200,
+          axis line style={latex-latex},
+          xtick={-4,-2,0,2,4},
+          ytick={-2,-1,0,1,2,3},
+          xmin=-4.5,
+          xmax=4.5,
+          ymin=-2.5,
+          ymax=3.5,
+        ]
+          \addplot[accent, ultra thick, domain=-4:4]{x^4-3*x^3+x^2+x+1};
+          \addplot[accent2, ultra thick, domain=-4:4]{-0.6*x^4-1.3*x^3+0.7*x^2+1.6*x-1};
+        \end{axis}
+    \end{tikzpicture}
+\end{center}
+\end{minipage}
+
+\subsubsection*{Zusammenhang zwischen Grad und Eigenschaften}
+Eine Polynomfunktion $n$-ten Grades kann:
+\begin{itemize}
+    \item maximal $n$ reelle Nullstellen haben
+    \item maximal $n-1$ Extrempunkte haben
+    \item maximal $n-2$ Wendepunkte haben
+\end{itemize}
+Polynomfunktionen bei denen $n$ ungerade ist, haben immer mindestens eine Nullstelle. \\
+Polynomfunktionen bei denen $n$ gerade ist, können auch gar keine reelle Nullstelle haben.
+
+\subsubsection*{Quadratische Funktionen}
+Quadratische Funktionen sind Polynomfunktionen 2. Grades. Sie werden meist in der allgemeinen Form angeschrieben:
+\begin{equation}
+    f(x) = ax^2 + bx +c
+\end{equation}
+Als weitere Form existiert noch die Scheitelpunktform:
+\begin{equation}
+    f(x) = a (x-x_s)^2 + y_s
+\end{equation}
+Aus der Scheitelpunktform kann man direkt die Koordinaten des Scheitelpunktes ablesen $S(x_s,y_s)$.
+\begin{bsp}
+    Gegeben sei die quadratische Funktion in allgemeiner Form:  
+    \[  
+        f(x) = x^2 + 4x + 3  
+    \]  
+    Wir wandeln nun in die Scheitelpunktform um (Quadratische Ergänzung):  
+    \begin{align*}  
+    f(x) &= x^2 + 4x + 3 \\  
+         &= \bigl(x^2 + 4x + 4\bigr) - 1 \\  
+         &= (x + 2)^2 - 1  
+    \end{align*}  
+    Damit liegt die Funktion in Scheitelpunktform vor:  
+    \[  
+        \boxed{f(x) = (x + 2)^2 - 1}
+    \]  
+    Der Scheitelpunkt hat also die Koordinaten \(S(-2 \mid -1).\). 
+    
+    \begin{center}  
+    \begin{tikzpicture}  
+    \begin{axis}[  
+        axis lines = middle,  
+        xmin = -4.5, xmax = 1.5,  
+        ymin = -2.5, ymax = 4.5,  
+        xlabel = {$x$},  
+        ylabel = {$y$},  
+        xtick = {-4,-3,-2,-1,0,1},  
+        ytick = {-2,-1,0,1,2,3,4},  
+        axis line style={latex-latex}
+    ]  
+      
+    % Parabel: f(x) = (x + 2)^2 - 1  
+    \addplot[domain=-5:2, samples=200, accent, ultra thick] {(x + 2)^2 - 1};  
+      
+    % Scheitelpunkt S(-2 | -1)  
+    \addplot[only marks, mark=*, mark size=2pt, black] coordinates {(-2,-1)};  
+    \node[below, black] at (axis cs:-2,-1) {$S(-2\mid -1)$};  
+      
+    \end{axis}  
+    \end{tikzpicture}  
+    \end{center}
+\end{bsp}
+
+\subsection{Exponentialfunktionen}
+
+Funktionen der Form
+\begin{equation}
+    f(x) = a b^x
+\end{equation}
+heißen Exponentialfunktionen. Für die Modellierung von kontinuierlichen physikalischen/biologischen Prozessen wird auch oft folgende Form verwendet:
+\begin{equation}
+    N(t) = N_0 e^{\lambda t}
+\end{equation}
+Eine wichtige Eigenschaft ist der Schnittpunkt mit der $y$-Achse, welchen man direkt aus beiden Formen ablesen kann. Setzt man $x=0$ bzw. $t=0$ ein erhält man:
+\begin{equation}
+\begin{array}{c@{\;}c@{\;}c}
+    f(0) = a \cdot b^0 = a & \qquad & P(0,a) \\[5pt]
+    N(0) = N_0 \cdot e^{\lambda \cdot 0} = N_0 & \qquad & P(0,N_0)
+\end{array}
+\end{equation}
+Die Parameter $b$ und $\lambda$ bestimmen die Steilheit und ob die Exponentialfunktion steigend/fallend ist.\\[5pt]
+\noindent
+\begin{minipage}[t]{0.45\textwidth}
+    \textbf{Lineares Wachstum} \\
+    Eine Größe nimmt in gleichen Zeitschritten immer um denselben \emph{absoluten} Betrag zu.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \textbf{Exponentielles Wachstum} \\
+    Eine Größe nimmt in gleichen Zeitschritten immer um denselben \emph{prozentualen / relativen} Faktor zu.
+\end{minipage}
+\vspace{20pt}\\
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{center}
+        \textbf{Wertetabelle von $f(x) = 2x + 1$}\\[0.3cm]
+        \renewcommand{\arraystretch}{1.3}  
+        \begin{tabular}{|>{\centering\arraybackslash}p{1cm}|>{\centering\arraybackslash}p{1cm}|} 
+            \hline
+            $x$ & $f(x)$ \\[2pt]
+            \hline
+            0 & 1  \\
+            1 & 3  \\
+            2 & 5  \\
+            3 & 7  \\
+            4 & 9  \\
+            5 & 11 \\
+            \hline
+        \end{tabular}
+        \begin{align}
+            f(x+1) &= f(x) + k \\
+            f(x+n) &= f(x) + k \cdot n
+        \end{align}
+        \textbf{Graph von $f(x) = 2x + 1$}\\[0.3cm]
+        \begin{tikzpicture}
+            \begin{axis}[
+                width=8cm,
+                height=7cm,
+                axis lines=middle,
+                xlabel={$x$},
+                ylabel={$y$},
+                xmin=-0.5, xmax=4.5,
+                ymin=-1,  ymax=10.5,
+                xtick={1,2,3,4},
+                ytick={0,2,4,6,8,10},
+                grid=both
+            ]
+            \addplot[domain=0:5,samples=100,very thick,accent]{2*x + 1}
+                node[pos=0.6, above=4pt] {$f(x)$};
+        
+            \draw[thick] (axis cs:0,1) -- (axis cs:1,1);
+            \draw[thick] (axis cs:1,1) -- (axis cs:1,3);
+            \node[right] at (axis cs:1,2){\small $+2$};
+        
+            \draw[thick] (axis cs:1,3) -- (axis cs:2,3);
+            \draw[thick] (axis cs:2,3) -- (axis cs:2,5);
+            \node[right] at (axis cs:2,4){\small $+2$};
+        
+            \draw[thick] (axis cs:2,5) -- (axis cs:3,5);
+            \draw[thick] (axis cs:3,5) -- (axis cs:3,7);
+            \node[right] at (axis cs:3,6){\small $+2$};
+        
+            \draw[thick] (axis cs:3,7) -- (axis cs:4,7);
+            \draw[thick] (axis cs:4,7) -- (axis cs:4,9);
+            \node[right] at (axis cs:4,8){\small $+2$};
+            
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+\end{minipage}
+    \hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{center}
+        \textbf{Wertetabelle von $g(x) = 2\cdot 2^{x}$}\\[0.3cm]
+        \renewcommand{\arraystretch}{1.3}  
+        \begin{tabular}{|>{\centering\arraybackslash}p{1cm}|>{\centering\arraybackslash}p{1cm}|} 
+            \hline
+            $x$ & $g(x)$ \\
+            \hline
+            0 & 2   \\
+            1 & 4   \\
+            2 & 8   \\
+            3 & 16  \\
+            4 & 32  \\
+            5 & 64  \\
+            \hline
+        \end{tabular}
+        \begin{align}
+            f(x+1) &= f(x) \cdot b \\
+            f(x+n) &= f(x) \cdot b^n
+        \end{align}
+        \\
+        \textbf{Graph von $g(x) = 2\cdot 2^{x}$}\\[0.3cm]
+        \begin{tikzpicture}
+            \begin{axis}[
+                width=8cm,
+                height=7cm,
+                axis lines=middle,
+                xlabel={$x$},
+                ylabel={$y$},
+                xmin=-0.5, xmax=4.5,
+                ymin=-5,   ymax=55,
+                xtick={1,2,3,4},
+                ytick={10,20,30,40,50},
+                grid=both,
+            ]
+            \addplot[domain=0:5,samples=100,very thick,accent]{2*2^x}
+                node[pos=0.6, above=4pt] {$g(x)$};
+            
+            \draw[thick] (axis cs:0,2) -- (axis cs:1,2);
+            \draw[thick] (axis cs:1,2) -- (axis cs:1,4);
+            \node[right] at (axis cs:1,2.45){\small $\cdot 2$};
+        
+            \draw[thick] (axis cs:1,4) -- (axis cs:2,4);
+            \draw[thick] (axis cs:2,4) -- (axis cs:2,8);
+            \node[right] at (axis cs:2,6){\small $\cdot 2$};
+        
+            \draw[thick] (axis cs:2,8) -- (axis cs:3,8);
+            \draw[thick] (axis cs:3,8) -- (axis cs:3,16);
+            \node[right] at (axis cs:3,12){\small $\cdot 2$};
+        
+            \draw[thick] (axis cs:3,16) -- (axis cs:4,16);
+            \draw[thick] (axis cs:4,16) -- (axis cs:4,32);
+            \node[right] at (axis cs:4,24){\small $\cdot 2$};
+            
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+\end{minipage}
+
+\bigskip
+\noindent
+\begin{minipage}{0.48\textwidth}
+{
+    \textbf{Wachsende Exponentialfunktionen} \\
+    Für $b>1$ und positive $\lambda$ ist die Exponentialfunktion steigend. Je größer der Parameter $b$ ist, desto schneller wächst die Exponentialfunktion. Je größer $\lambda$, desto steiler die Kurve.\\
+    \begin{align*}
+        f(x) = b^x,\quad b>1\\
+        f(x) = e^{\lambda x},\quad \lambda > 0
+    \end{align*}
+}
+{
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            width=\textwidth,
+            axis lines=middle,
+            xlabel={$x$},
+            ylabel={$y$},
+            xmin=-2.5, xmax=2.5,
+            ymin=-0.5, ymax=6.5,
+            xtick = {-2,-1,0,1,2},
+            ytick = {0,2,4,6},
+            legend style={at={(0.02,0.98)},anchor=north west,font=\small},
+            samples=200,
+            domain=-2:2,
+            axis line style={latex-latex},
+        ]
+            \addplot[accent,very thick]   {exp(2*x)};
+            \addlegendentry{$e^{2x}$}
+            
+            \addplot[accent2,very thick]  {2^x};
+            \addlegendentry{$2^{x}$}
+            
+            \addplot[accent3,very thick] {4^x};
+            \addlegendentry{$4^{x}$}
+            
+            \addplot[accent4,very thick] {exp(0.5*x)};
+            \addlegendentry{$e^{0{,}5x}$}
+        \end{axis}
+    \end{tikzpicture}
+}
+\end{minipage}\hfill
+\begin{minipage}{0.48\textwidth}
+{
+    \textbf{Fallende Exponentialfunktionen}
+    Ist der Parameter $b$ zwischen 0 und 1 oder der Parameter $\lambda$ negativ, so ist die Exponentialfunktion fallend. Beachte: Ein negativer Exponent mit $b>1$ ergibt auch eine fallend Exponentialfunktion: \(4^{-x}=\frac{1}{4^x}\)
+    \begin{align*}
+        f(x) = b^x,\quad 0<b<1\\
+        f(x) = e^{\lambda x},\quad \lambda < 0
+    \end{align*}
+
+}
+{
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            width=\textwidth,
+            axis lines=middle,
+            xlabel={$x$},
+            ylabel={$y$},
+            xmin=-2.5, xmax=2.5,
+            ymin=-0.5, ymax=6.5,
+            xtick = {-2,-1,0,1,2},
+            ytick = {0,2,4,6},
+            legend style={at={(0.98,0.98)},anchor=north east,font=\small},
+            samples=200,
+            domain=-2:2,
+            axis line style={latex-latex},
+        ]
+            \addplot[accent, very thick]  {2^(-x)};
+            \addlegendentry{$2^{-x}$}
+            
+            \addplot[accent2, very thick] {4^(-x)};
+            \addlegendentry{$4^{-x}$}
+            
+            \addplot[accent3, very thick]   {exp(-2*x)};
+            \addlegendentry{$e^{-2x}$}
+            
+            \addplot[accent4, very thick] {exp(-0.5*x)};
+            \addlegendentry{$e^{-0{,}5x}$}
+        \end{axis}
+    \end{tikzpicture}
+}
+\end{minipage}
+
+\vspace{20pt}
+
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+{
+    \textbf{Streckung, Stauchung, Inversion}\\
+    Der Faktor $a,\,N_0$ bewirkt eine Streckung \\($a>1$), Stauchung ($0<a<1$) oder Inversion ($a<0$). Er gibt auch den Schnittpunkt mit der $y$-Achse $P(0,a)$ $P(0,N_0)$ an.
+}
+{
+    \begin{align*}
+        f(x) &= a \, b^x, \quad b>1 \\
+        f(x) &= N_0 \, e^x
+    \end{align*}
+    \begin{tikzpicture}
+      \begin{axis}[
+        width=\linewidth,
+        height=7cm,
+        axis lines=middle,
+        xmin=-2.5, xmax=3.5,
+        ymin=-4.5, ymax=4.5,
+        xtick={-2,-1,0,1,2,3},
+        ytick={-4,-3,-2,-1,0,1,2,3,4},
+        samples=200,
+        domain=-2:3,
+        legend style={font=\scriptsize,at={(0.97,0.03)},anchor=south east},
+        axis line style={latex-latex},
+        xlabel={$x$}, ylabel={$y$}
+      ]
+        \addplot[accent, very thick]   {2*2^x};
+        \addlegendentry{$2\cdot 2^x$}
+    
+        \addplot[accent2, very thick]    {2^x};
+        \addlegendentry{$2^x$}
+    
+        \addplot[accent3, very thick] {0.5*2^x};
+        \addlegendentry{$0{,}5\cdot 2^x$}
+    
+        \addplot[accent4, very thick] {-2^x};
+        \addlegendentry{$-2^x$}
+      \end{axis}
+    \end{tikzpicture}
+}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}
+{
+    \textbf{Verschiebung in $y$‑Richtung}\\
+    Die additive Konstanten c bewirkt wie bei allen bisherigen Funktionstypen eine Verschiebung in $y$-Richtung.\\
+    \begin{align*}
+      f(x) = a\, b^x + c \\
+      f(x) = N_0 e^{\lambda x} + c
+    \end{align*}
+}
+{
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+        width=\linewidth,
+        height=7cm,
+        axis lines=middle,
+        xmin=-2.5, xmax=3.5,
+        ymin=-4.5, ymax=4.5,
+        xtick={-2,-1,0,1,2,3},
+        ytick={-4,-3,-2,-1,0,1,2,3,4},
+        samples=200,
+        domain=-2:3,
+        legend style={font=\scriptsize,at={(0.97,0.03)},anchor=south east},
+        axis line style={latex-latex},
+        xlabel={$x$}, ylabel={$y$},
+      ]
+        \addplot[accent, very thick]   {2^x + 1};
+        \addlegendentry{$2^x+1$}
+    
+        \addplot[accent2, very thick]    {2^x};
+        \addlegendentry{$2^x$}
+    
+        \addplot[accent3, very thick] {2^x - 2};
+        \addlegendentry{$2^x-2$}
+    
+        \addplot[accent4, very thick] {-2^x + 1};
+        \addlegendentry{$-2^x+1$}
+      \end{axis}
+    \end{tikzpicture}
+}
+\end{minipage}
+
+\pagebreak
+
+\subsubsection{natürliche Wachstumsvorgänge}
+Natürliche Wachstumsvorgänge werden meist mit folgender Formel beschrieben:
+\begin{align}
+    N(t)=N_0 \cdot e^{\lambda t},\quad \lambda > 0 \qquad  &N(t) \dots \text{Größe zum Zeitpunkt } t \\
+                                                           &N_0 \dots \text{Anfangsgröße} \nonumber \\
+                                                           &\lambda \dots \text{Wachstumskonstante} \nonumber
+\end{align}
+Ein wichtiger Parameter ist die \emph{Verdopplungszeit}. Sie wird als die Zeit definiert, nach der sich die Grundmenge $N_0$ verdoppelt hat.\\
+Um die Verdopplungszeit auszurechnen muss man folgende Gleichung nach $t$ Lösen:
+\begin{equation}
+    2 N_0 = N_0 \cdot e^{\lambda t}
+\end{equation}
+
+\subsubsection{natürliche Abklingvorgänge}
+Natürliche Abklingvorgänge werden meist mit folgender Formel beschrieben:
+\begin{align}
+    N(t)=N_0 \cdot e^{-\lambda t},\quad \lambda > 0 \qquad  &N(t) \dots \text{Größe zum Zeitpunkt } t \\
+                                                           &N_0 \dots \text{Anfangsgröße} \nonumber \\
+                                                           &\lambda \dots \text{Wachstumskonstante} \nonumber
+\end{align}
+Ein wichtiger Parameter ist die \emph{Halbwertszeit}. Sie wird als die Zeit definiert, nach der sich die Grundmenge $N_0$ halbiert hat.\\
+Um die Halbwertszeit auszurechnen muss man folgende Gleichung nach $t$ Lösen:
+\begin{equation}
+    \frac{N_0}{2} = N_0 \cdot e^{\lambda t}
+    \label{eq:halbwertszeit}
+\end{equation}
+\vspace{20pt}
+\begin{aufgabe}
+    \emph{Radioaktiver Zerfall von Arsen-73} \\[2pt]
+    Die Anzahl der Atomkerne wird durch $N(t)=N_0 \cdot e^{-\lambda t}$ beschrieben wobei\\
+    $N_0=10^{20},\quad \lambda = 0.0086\,d^{-1}$
+    \begin{itemize}
+        \item[1.] Ermittle die Anzahl an Atomkernen nach 200 Tagen
+        \item[2.] Ermittle die Halbwertszeit
+        \item[3.] Stelle $N(t)$ graphisch dar und markiere die Halbwertszeit
+    \end{itemize}
+\end{aufgabe}
+\begin{loesung}
+    \begin{itemize}
+        \item[1.] Die Anzahl erhält man wenn man $200\,d$ als Argument für $N(t)$ verwendet:
+            \[
+                N(200\,d) = N_0 \cdot e^{-\lambda t} = 10^{20} \cdot e^{-0.0086 \cdot 200} \approx 
+                \boxed{1.79 \cdot 10^{19}}
+            \]
+        \item[2.] Die Halbwertszeit erhalten wir indem wir Gleichung \ref{eq:halbwertszeit} lösen:
+            \begin{align*}
+                \frac{N_0}{2} &= N_0 \cdot e^{-\lambda t} \\
+                \frac{1}{2} &= e^{-\lambda t} \\
+                \ln{\left(\frac{1}{2}\right)} &= -\lambda t \ln{(e)} \\
+                t &= \frac{\ln{\left(\frac{1}{2}\right)}}{\lambda} \approx \boxed{80.6\,d}
+            \end{align*}
+            \begin{geogebracode}
+                NLöse(1/2=exp(-0.0086*t),t) // CAS            
+            \end{geogebracode}
+        \item[3.] Die Funktion sieht folgendermaßen aus
+    \end{itemize}
+
+    \begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[
+            width=12cm,
+            height=8cm,
+            axis lines=middle,  
+            xlabel={$t\,[\mathrm{d}]$},
+            ylabel={$N(t)$},
+            xmin=0, xmax=250,
+            ymin=0, ymax=1.05e20,
+            ytick={2e19,4e19,6e19,8e19,1e20},
+            yticklabels={$2\cdot10^{19}$,$4\cdot10^{19}$,$6\cdot10^{19}$,$8\cdot10^{19}$,$10^{20}$},
+            scaled y ticks=false,
+        ]
+            % Funktion N(t) = 10^20 * e^{-0.0086 t} (einzige farbige Kurve)
+            \addplot[domain=0:250, samples=200, accent, thick] {1e20 * exp(-0.0086*x)};
+            
+            % Punkt 1: t = 80.6 d, N = 10^20 / 2 = 5e19
+            \addplot[only marks, mark=*, mark size=2pt, black] coordinates {(80.6,5e19)};
+            \node[anchor=south west] at (axis cs:80.6,5e19)
+              {$\bigl(80.6\,\mathrm{d},\tfrac{10^{20}}{2}\bigr)$};
+            \addplot[black, densely dashed] coordinates {(80.6,0) (80.6,5e19)};
+            \addplot[black, densely dashed] coordinates {(0,5e19) (80.6,5e19)};
+            
+            % Punkt 2: t = 200 d, N = 1.77 * 10^19
+            \addplot[only marks, mark=*, mark size=2pt, black] coordinates {(200,1.77e19)};
+            \node[above] at (axis cs:200,1.77e19)
+              {$\bigl(200\,\mathrm{d},1.77\cdot10^{19}\bigr)$};
+            \addplot[black, densely dashed] coordinates {(200,0) (200,1.77e19)};
+            \addplot[black, densely dashed] coordinates {(0,1.77e19) (200,1.77e19)};
+        \end{axis}
+    \end{tikzpicture}
+    \end{center}
+\end{loesung}
+
+\pagebreak
+\subsection{Sinusfunktion, Cosinusfunktion}
+\subsubsection{Graph der Sinusfunktion}
+Lässt man einen Punkt entlang des Einheitskreises laufen, dann entspricht die $y$-Position des Punktes den Wert der Sinusfunktion.
+\begin{center}
+    \begin{tikzpicture}[scale=1.5]
+        \begin{scope} % Einheitskreis
+            \draw[thick] (0.4,0) arc (0:45:0.4);    % Winkel
+            \node at (0.5,0.2) {$\alpha$};
+            
+            \coordinate (P) at (45:1);              % Punkt am Einheitskreis
+            \draw[thick] (0,0) -- (P);              % Radius
+            \draw[thick, accent2] (0.707,0) -- (P); % y-Länge: sin(x)
+            \fill (P) circle (1pt);                 % Punkt am Einheitskreis
+        
+            \draw[thick] (0,0) circle (1);          % Kreis
+            \draw[<->, thick] (-1.4,0) -- (1.4,0);  % x-Achse
+            \draw[<->, thick] (0,-1.4) -- (0,1.4);  % y-Achse
+            
+            \node[below right] at (1,0) {$1$};
+            \node[above right] at (0,1) {$1$};
+            \node[below left] at (-1,0) {$-1$};
+            \node[below right] at (0,-1) {$-1$};
+        \end{scope}
+        
+        \coordinate (Psin) at ($(2cm,0) + (0.785,{sin(45)})$);  
+        \draw[accent2, thick] ($(2cm,0) + (0.785,0)$) -- (Psin);
+        \draw[densely dashed] (P) -- (Psin);
+        
+        \begin{scope}[xshift=2cm] % Funktionsgraph
+            \draw[<->, thick] (-0.2,0) -- (7,0) node[right] {$\alpha$};
+            \draw[<->, thick] (0,-1.3) -- (0,1.3) node[above] {$y$};
+            
+            % Sinusfunktion
+            \draw[accent, ultra thick, domain=0:6.283,smooth,variable=\x] plot
+            ({\x},{sin(\x r)});
+            
+            % Markierungen y-Achse 
+            \draw[thick] (-0.05,1) -- (0.05,1);
+            \node[left] at  (-0.05,1) {$1$};
+            \draw[thick] (-0.05,-1) -- (0.05,-1);
+            \node[left] at (-0.05,-1) {$-1$};
+            
+            % Winkelbeschriftungen
+            \foreach \ang/\x in {45/0.785,90/1.571,180/3.142,270/4.712,360/6.283} {
+            \draw[very thick] (\x,0.05) -- (\x,-0.05);
+            \node[below] at (\x,0) {$\ang^\circ$};
+            }
+        \end{scope}
+        \fill (Psin) circle (1pt);
+    \end{tikzpicture}
+\end{center}
+\begin{itemize}
+    \item ungerade Funktion (punktsymmetrisch zum Ursprung) 
+    \item $2\pi$-periodisch: $\sin{(x+2\pi)} = \sin{(x)}$
+    \item Definitionsbereich $D=\mathbb{R}$, Wertebereich $W=[-1,1]$
+    \item Nullstellen $x=\{ \dots,\,-2\pi,\,-\pi,\,0,\,\pi,\,2\pi,\,\dots \}$ 
+\end{itemize}
+
+\subsubsection{Graph der Cosinusfunktion}
+Lässt man einen Punkt entlang des Einheitskreises laufen, dann entspricht die $x$-Koordinate des Punktes den Wert der Sinusfunktion.
+\begin{center}
+    \begin{tikzpicture}[scale=1.5]
+        \begin{scope} % Einheitskreis
+            \draw[thick] (0.4,0) arc (0:45:0.4);    % Winkel
+            \node at (0.5,0.2) {$\alpha$};
+            
+            \coordinate (P) at (45:1);              % Punkt am Einheitskreis
+            \draw[thick] (0,0) -- (P);              % Radius
+            \draw[thick] (0.707,0) -- (P);          % y-Länge: sin(x)
+            \fill (P) circle (1pt);                 % Punkt am Einheitskreis
+        
+            \draw[thick] (0,0) circle (1);          % Kreis
+            \draw[<->, thick] (-1.4,0) -- (1.4,0);  % x-Achse
+            \draw[<->, thick] (0,-1.4) -- (0,1.4);  % y-Achse
+            
+            \node[below right] at (1,0) {$1$};
+            \node[above right] at (0,1) {$1$};
+            \node[below left] at (-1,0) {$-1$};
+            \node[below right] at (0,-1) {$-1$};
+    
+            \draw[thick, accent2] (0,0) -- (0.707,0);
+            
+        \end{scope} 
+        
+        \coordinate (Pcos) at ($(2cm,0) + (0.785,{sin(45)})$);  
+        \draw[accent2, thick] ($(2cm,0) + (0.785,0)$) -- (Pcos);
+    
+        \begin{scope}[xshift=2cm] % Funktionsgraph
+            \draw[<->, thick] (-0.2,0) -- (7,0) node[right] {$\alpha$};
+            \draw[<->, thick] (0,-1.3) -- (0,1.3) node[above] {$y$};
+            
+            % Cosinusfunktion
+            \draw[accent, ultra thick, domain=0:6.283,smooth,variable=\x] plot
+            ({\x},{cos(\x r)});
+            
+            % Markierungen y-Achse 
+            \draw[thick] (-0.05,1) -- (0.05,1);
+            \node[left] at  (-0.05,1) {$1$};
+            \draw[thick] (-0.05,-1) -- (0.05,-1);
+            \node[left] at (-0.05,-1) {$-1$};
+            
+            % Winkelbeschriftungen
+            \foreach \ang/\x in {45/0.785,90/1.571,180/3.142,270/4.712,360/6.283} {
+            \draw[very thick] (\x,0.05) -- (\x,-0.05);
+            \node[below] at (\x,0) {$\ang^\circ$};
+            }
+        \end{scope}
+        \fill (Pcos) circle (1pt);
+    \end{tikzpicture}
+\end{center}
+\begin{itemize}
+    \item gerade Funktion (symmetrisch zur $y$-Achse) 
+    \item $2\pi$-periodisch: $\cos{(x+2\pi)} = \cos{(x)}$
+    \item Definitionsbereich $D=\mathbb{R}$, Wertebereich $W=[-1,1]$
+    \item Nullstellen $x = \{\ldots, -\tfrac{3\pi}{2},\, -\tfrac{\pi}{2},\, \tfrac{\pi}{2},\, \tfrac{3\pi}{2},\, \tfrac{5\pi}{2},\, \ldots\}$
+\end{itemize}
+
+\subsubsection{Graph der Tangensfunktion}
+\begin{center}
+    \begin{tikzpicture}[scale=1.5]
+        \begin{scope}
+            \draw[thick] (0.4,0) arc (0:45:0.4);    % Winkel
+            \node at (0.5,0.2) {$\alpha$};
+            
+            \coordinate (P) at (45:1);              % Punkt am Einheitskreis
+            \draw[thick] (0,0) -- (P);              % Radius
+            \draw[thick] (0.707,0) -- (P);          % y-Länge: sin(x)
+        
+            \draw[thick] (0,0) circle (1);          % Kreis
+            \draw[<->, thick] (-1.4,0) -- (1.4,0);  % x-Achse
+            \draw[<->, thick] (0,-1.4) -- (0,1.4);  % y-Achse
+            
+            \node[below right] at (1,0) {$1$};
+            \node[above right] at (0,1) {$1$};
+            \node[below left] at (-1,0) {$-1$};
+            \node[below right] at (0,-1) {$-1$};
+        
+            \draw[thick] (0,0) -- (P);
+            \draw[densely dashed] (1,-1.5) -- (1,0);
+            \draw[densely dashed] (1,1) -- (1,2);
+            \coordinate (T) at (1,{tan(45)});
+            \draw[dashed] (P) -- (T);  % Hilfslinie von P zu T
+            \draw[thick, accent2] (1,0) -- (T);
+            \fill (T) circle (1pt);
+        \end{scope}
+        
+        \draw[densely dashed] (1,1) -- ($(2cm,0) + (0.785,1)$);
+        \draw[accent2, thick] ($(2cm,0) + (0.785,0)$) -- ($(2cm,0) + (0.785,1)$);
+        
+        \begin{scope}[xshift=2cm] % Funktionsraph
+            \draw[<->, thick] (-0.2,0) -- (7,0) node[right] {$\alpha$};
+            \draw[<->, thick] (0,-1.3) -- (0,1.3) node[above] {$y$};
+        
+            % Vertikale Asymptoten bei 90° (pi/2) und 270° (3pi/2)
+            \draw[densely dashed] (1.571,-2) -- (1.571,2);
+            \draw[densely dashed] (4.712,-2) -- (4.712,2);
+            
+            \clip (-0.5,-2) rectangle (7,2);
+        
+            % Tangens-Äste: 0°..90°, 90°..270°, 270°..360°
+            % 1. Ast: 0 bis etwas vor 90°
+            \draw[accent, ultra thick, domain=0.0:1.4, smooth, variable=\x]
+              plot ({\x},{tan(\x r)});
+            % 2. Ast: etwas nach 90° bis etwas vor 270°
+            \draw[accent, ultra thick, domain=1.75:4.5, smooth, variable=\x]
+              plot ({\x},{tan(\x r)});
+            % 3. Ast: etwas nach 270° bis 360°
+            \draw[accent, ultra thick, domain=4.9:6.283, smooth, variable=\x]
+              plot ({\x},{tan(\x r)});
+        
+            % Markierungen y-Achse 
+            \draw[thick] (-0.05,1) -- (0.05,1);
+            \node[left] at  (-0.05,1) {$1$};
+            \draw[thick] (-0.05,-1) -- (0.05,-1);
+            \node[left] at (-0.05,-1) {$-1$};
+        
+            % Winkelbeschriftungen
+            \foreach \ang/\x in {45/0.785,90/1.571,135/2.356,180/3.142,225/3.927,270/4.712,315/5.498,360/6.283} {
+            \draw[very thick] (\x,0.05) -- (\x,-0.05);
+            \node[below] at (\x,0) {$\ang^\circ$};
+            }
+        \end{scope}
+        \fill ($(2cm,0) + (0.785,1)$) circle (1pt);
+    \end{tikzpicture}
+\end{center}
+\begin{itemize}
+    \item ungerade Funktion (punktsymmetrisch zum Ursprung) 
+    \item $\pi$-periodisch: ($\tan{(x+\pi} = \tan{(x)}$
+    \item Definitionsbereich $D= \mathbb{R} \setminus \{ \frac{\pi}{2} + k\pi,\; k \in \mathbb{Z} \}$, Wertebereich $W=\mathbb{R}$
+    \item Nullstellen $x = \{\ldots, -2\pi,\, -\pi,\, 0,\, \pi,\, 2\pi,\, \ldots\}$
+\end{itemize}
+
+\subsubsection{Allgemeine Sinusfunktion}
+Wir betrachten Funktionen der Form
+\begin{equation}
+    f(x) = a \cdot \sin(bx) + c.
+\end{equation}
+
+\paragraph{Bedeutung der Parameter}
+\begin{itemize}
+  \item[$a:$] Amplitude: Streckung/Stauchung in $y$-Richtung und ggf. Spiegelung an der $x$.
+    \item[$b:$] Kreisfrequenz: Streckung/Stauchung in $x$-Richtung, hat einen direkten Zusammenhang mit der Frequenz $f$ und der Periodendauer $T$:
+        \begin{align}
+            b = 2 \pi \cdot f, \qquad f = \frac{b}{2\pi} \\
+            T = \frac{1}{f}=\frac{2\pi}{b}, \qquad b = \frac{2\pi}{T}
+        \end{align}
+  \item[$c:$]  Additive Konstante: Verschiebung in $y$-Richtung.
+\end{itemize}
+\noindent
+Oft sieht man in technischen Anwendungen auch die Form:
+\begin{align*}
+    x(t) = \hat{x} \cdot \sin{(\omega \cdot t + \varphi)} + \Bar{x}, 
+    \qquad  & \hat{a} \dots  \text{Amplitude}          \\
+            & \omega  \dots  \text{Kreisfrequenz}      \\
+            & \varphi \dots  \text{Phasenverschiebung} \\
+            & \Bar{x} \dots  \text{Mittelwert/Gleichanteil}
+\end{align*}
+Hier entprechen die Parameter $\hat{x},\omega \text{ und } \Bar{x}$ den Parametern $a,b \text{ und } c$.
+Der Parameter $\varphi$ entspricht einer Verschiebung in $x$-Richtung. \\[10pt]
+\begin{aufgabe}
+    Im folgenden Graph ist eine Sinusfunktion der Form
+    \[
+        f(x) = a \cdot \sin{(bx)} + d
+    \]
+    dargestellt. Ermittle die Parameter $a,b \text{ und } c$.
+
+    \begin{center}
+      \begin{tikzpicture}
+        \begin{axis}[
+          width=14cm,
+          height=7cm,
+          axis lines=middle,
+          xmin=-4.5*pi, xmax=4.5*pi,
+          ymin=-3, ymax=5,
+          xtick={-4*pi,-3*pi,-2*pi,-pi,0,pi,2*pi,3*pi,4*pi},
+          xticklabels={$-4\pi$,$-3\pi$,$-2\pi$,$-\pi$,$0$,$\pi$,$2\pi$,$3\pi$,$4\pi$},
+          ytick={-2,-1,0,1,2,3,4},
+          trig format=rad,   
+          xlabel={$x$},
+          ylabel={$y$},
+          axis line style = {latex-latex},
+        ]
+    
+          % eigentliche Sinusfunktion
+          \addplot[
+            domain=-4*pi:4*pi,
+            samples=300,
+            accent,
+            very thick
+          ] {2*sin(0.5*x) + 1}
+                node[pos=0.2, above right] {$f(x)$};    
+    
+        \end{axis}
+      \end{tikzpicture}
+    \end{center}
+\end{aufgabe}
+
+
+\begin{loesung} \\
+    Zuerst ist es immer hilfreich, die Mittellinie einzuzeichnen
+    \begin{center}
+      \begin{tikzpicture}[>=stealth]
+        \begin{axis}[
+          width=14cm,
+          height=7cm,
+          axis lines=middle,
+          xmin=-4.5*pi, xmax=4.5*pi,
+          ymin=-3, ymax=5,
+          xtick={-4*pi,-3*pi,-2*pi,-pi,0,pi,2*pi,3*pi,4*pi},
+          xticklabels={$-4\pi$,$-3\pi$,$-2\pi$,$-\pi$,$0$,$\pi$,$2\pi$,$3\pi$,$4\pi$},
+          ytick={-2,-1,0,1,2,3,4},
+          trig format=rad,   
+          xlabel={$x$},
+          ylabel={$y$},
+          axis line style = {latex-latex},
+        ]
+    
+          % eigentliche Sinusfunktion
+          \addplot[
+            domain=-4.1*pi:4.1*pi,
+            samples=300,
+            accent,
+            very thick
+          ] {2*sin(0.5*x) + 1}
+                node[pos=0.2, above right] {$f(x)$};    
+
+            \addplot[dashed, domain=-4.2*pi:4.2*pi] {1};
+                
+            \addplot[mark=*] coordinates {(pi,3)} node[above right] {Max};
+            \addplot[mark=*] coordinates {(-pi,-1)} node[below left] {Min};
+            
+            \addplot[mark=*] coordinates {(0,1)};
+            
+            %\draw[<->] (axis cs:pi,1) -- (axis cs:pi,3) {$a$};
+            \draw[<->] (axis cs:pi,1) -- node[right] {$a$} (axis cs:pi,3);
+            \draw[<->] (axis cs:pi/2,0) -- node[right] {$c$} (axis cs:pi/2,1);
+            \draw[<->] (axis cs:-pi, -1.7) -- node[below] {$T$} (axis cs:3*pi, -1.7);
+    
+        \end{axis}
+      \end{tikzpicture}
+    \end{center}
+    Die Amplitude $a$ kann man entweder direkt ablesen oder über das Maximum und Minimum berechnen:
+    \[ 
+        a = \frac{\text{Max}-\text{Min}}{2} = \frac{3-(-1)}{2} = 2
+    \]
+    Die Frequenz berechnet sich über die Periodendauer welche man als Abstand der zwei Minima bzw. Maxima ablesen kann.
+    \[
+        b = \frac{2\pi}{T} = \frac{2\pi}{4\pi} = \frac{1}{2}
+    \]
+    Die Additive Konstante kann man als Abstand zwischen $x$-Achse und Mittellinie ablesen.
+    \[
+        c = 1
+    \]
+    Wir erhalten als Lösung
+    \[
+        \boxed{f(x) =  2 \cdot \sin{\left( \frac{1}{2}\cdot x \right)} + 1}
+    \]
+\end{loesung}

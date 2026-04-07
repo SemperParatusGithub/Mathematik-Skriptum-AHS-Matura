@@ -1,0 +1,125 @@
+\documentclass[a4paper,11pt]{article}
+
+% Encoding, Sprache, Typografie
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\numberwithin{equation}{subsection}
+\usepackage{esvect}
+
+% Grafiken und Tabellen
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{pifont} % für einfache Symbol-Würfel (optional)
+
+\usepackage{lipsum}
+
+\usepackage{tikz}
+\usepackage{tikz-dimline}
+\usetikzlibrary{angles,quotes,arrows.meta,calc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{statistics} % stellt gausscdf bereit
+
+\usepackage{fancyhdr}
+\pagestyle{fancy} % Enable fancyhdr
+\fancyhf{} % Clear all header/footer settings
+\fancyhead[L]{\nouppercase{\leftmark}} % Left header: Chapter name
+\fancyhead[R]{\thepage}
+\fancyfoot[R]{\copyright\;Nils Schlager}
+\fancyfoot[L]{\monthyeardate\today}
+\renewcommand{\headrulewidth}{0.4pt} % Enable horizontal header line
+
+% Kein Header wenn eine neue section beginnt
+\usepackage{etoolbox}
+\pretocmd{\section}{\thispagestyle{plain}}{}{}
+
+% Listen, Farben, Links
+\usepackage{enumitem}
+\usepackage{xcolor}  
+\definecolor{tocblue}{RGB}{0,92,170}  
+\definecolor{accent}{RGB}{0,112,141}    % kühles Blaugrün
+\definecolor{accent2}{RGB}{220,50,47}   % kräftiges Rot
+\definecolor{accent3}{RGB}{46,139,87}   % kräftiges Grün (SeaGreen)
+\definecolor{accent4}{RGB}{255,140,0}   % kräftiges Orange (DarkOrange)
+
+\usepackage{hyperref}  
+\hypersetup{  
+  colorlinks=false,  
+  pdfborder={0 0 0},
+  linkcolor=tocblue,  
+  urlcolor=tocblue,  
+  citecolor=tocblue  
+}
+
+% ToC-Layout  
+\usepackage{tocloft}  
+  
+% Füllpunkte (Leader) zwischen Eintrag und Seitenzahl  
+\renewcommand{\cftdotsep}{2} % Abstand der Punkte (kleiner = dichter)  
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}  
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+
+% Abschnittsebene fett im ToC  
+\renewcommand{\cftsecfont}{\bfseries}  
+\renewcommand{\cftsecpagefont}{\color{tocblue}\bfseries} % Seitenzahl rechts fett + blau
+
+% Subsection normal (oder fett, wenn gewünscht)  
+\renewcommand{\cftsubsecfont}{}  
+\renewcommand{\cftsubsecpagefont}{\color{tocblue}}       % Seitenzahl rechts blau
+
+\setlength{\cftbeforesecskip}{15pt}       % vertikaler Abstand zwischen Sections  
+\setlength{\cftbeforesubsecskip}{5pt}    % vertikaler Abstand zwischen Subsections
+
+\usepackage{titlesec}  
+  
+% Section: larger and bold  
+\titleformat{\section}  
+  {\bfseries\sffamily\huge}    % format for the whole title  
+  {\thesection}                 % label  
+  {0.8em}                       % spacing between label and title  
+  {}                            % before-code  
+  
+% Subsection: a bit smaller than section  
+\titleformat{\subsection}  
+  {\bfseries\sffamily\LARGE}  
+  {\thesubsection}  
+  {0.6em}  
+  {}
+
+\include{commands}
+
+% Titel
+\title{\textbf{Skriptum: Mathematik-Matura}}
+\author{Nils Schlager}
+\date{\today}
+
+\begin{document}
+\include{0_Titlepage}
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\vfill
+\subsubsection*{Hinweis}
+Dieses Skript wurde im Rahmen zahlreicher Nachhilfestunden erstellt und orientiert sich an den Themenbereichen der Mathematik für die AHS-Matura. Es dient SchülerInnen als Nachschlagewerk und Verständnishilfe. Das Skript erhebt keinen Anspruch auf Vollständigkeit; vielmehr fasst es aus meiner Sicht die wichtigsten Inhalte kurz und übersichtlich zusammen.
+
+\pagebreak
+\include{1_AG}
+\pagebreak
+\include{2_FA}
+\pagebreak
+\include{3_AN}
+\pagebreak
+\include{4_WS}
+
+\end{document}
