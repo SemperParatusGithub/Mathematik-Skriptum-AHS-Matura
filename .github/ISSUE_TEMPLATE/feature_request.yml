@@ -1,0 +1,128 @@
+name: "Neuer Inhalt / Feature vorschlagen"
+description: "Ein Thema, Beispiel, Kapitel oder eine Grafik fehlt bzw. soll ergänzt werden."
+title: "[Feature][Kürzel] <kurze Beschreibung>"
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Danke für deinen Vorschlag! Damit neue Inhalte gut integriert werden können, ist eine **möglichst präzise Beschreibung** entscheidend.
+        Je genauer unten beschrieben ist, was im Skriptum stehen soll, desto schneller kann es umgesetzt werden.
+
+  - type: dropdown
+    id: chapter
+    attributes:
+      label: Zielkapitel
+      description: In welchem Themenbereich soll der neue Inhalt erscheinen?
+      options:
+        - "AG — Algebra und Geometrie"
+        - "FA — Funktionale Abhängigkeiten"
+        - "AN — Analysis"
+        - "WS — Wahrscheinlichkeit und Statistik"
+        - "Neues Kapitel / themenübergreifend"
+        - "Layout / Design / allgemein"
+    validations:
+      required: true
+
+  - type: input
+    id: placement
+    attributes:
+      label: Wo genau soll der Inhalt eingefügt werden?
+      description: Abschnitt, nach welcher Seite, neben welchem bestehenden Thema?
+      placeholder: "z. B. Kapitel FA, als neuer Abschnitt 2.6 nach 2.5 'Exponentialfunktionen'"
+    validations:
+      required: true
+
+  - type: textarea
+    id: topic
+    attributes:
+      label: Thema / Definition
+      description: Welches mathematische Konzept soll behandelt werden? Kurze fachliche Beschreibung.
+      placeholder: "z. B. Logarithmusfunktion f(x) = log_a(x) als Umkehrfunktion der Exponentialfunktion."
+    validations:
+      required: true
+
+  - type: textarea
+    id: formulas
+    attributes:
+      label: Formeln, Sätze, Regeln
+      description: Welche Gleichungen / Sätze / Regeln sollen explizit enthalten sein?
+      placeholder: |
+        - Definitionsmenge, Wertemenge
+        - Rechenregeln: Produkt-, Quotienten-, Potenzregel, Basiswechsel
+        - Nullstelle bei x=1
+    validations:
+      required: true
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Beispiele (mindestens eines!)
+      description: Angabe + Lösungsweg + Ergebnis. Lieber ausführlich als zu knapp.
+      placeholder: |
+        Beispiel 1: Gleichung log_2(x+3) = 5 lösen.
+          → x + 3 = 2^5 = 32  →  x = 29
+
+        Beispiel 2: Halbwertszeit eines Medikaments …
+    validations:
+      required: true
+
+  - type: textarea
+    id: figures
+    attributes:
+      label: Grafiken / Abbildungen (optional)
+      description: Welche Skizzen oder Schaubilder sollen rein? Eine Beschreibung genügt — du musst nichts zeichnen.
+      placeholder: "z. B. Schaubild von log_2(x), ln(x), log_10(x) im gleichen Koordinatensystem."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Geschätzter Umfang
+      options:
+        - "kurzer Absatz"
+        - "eine halbe bis ganze Seite"
+        - "1–2 Seiten"
+        - "mehrere Seiten / ganzer Abschnitt"
+        - "ganzes Kapitel"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: level
+    attributes:
+      label: Schwierigkeitsgrad
+      options:
+        - "Grundkompetenz (Basis)"
+        - "Maturaniveau"
+        - "Vertiefend / über Matura hinaus"
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Warum ist das sinnvoll?
+      description: Begründung — was bringt das den Leserinnen und Lesern?
+      placeholder: "z. B. Kommt regelmäßig in Maturaaufgaben vor, ist im Lehrplan enthalten, fehlt bisher komplett."
+    validations:
+      required: true
+
+  - type: textarea
+    id: references
+    attributes:
+      label: Quellen / Referenzen (optional)
+      description: Schulbuch, BIFIE-Aufgabenpool, Link zu einer Maturaaufgabe, Wikipedia …
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Abschlusscheck
+      options:
+        - label: "Ich habe überprüft, dass dieser Inhalt nicht bereits im Skriptum steht."
+          required: true
+        - label: "Ich habe mindestens ein konkretes Beispiel mit Lösungsweg angegeben."
+          required: true

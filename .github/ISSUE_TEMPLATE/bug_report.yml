@@ -1,0 +1,79 @@
+name: "Fehler im Skriptum melden"
+description: "Tippfehler, Rechenfehler, falsche Formel, kaputtes Bild, schlechte Formatierung usw."
+title: "[Fehler][Kürzel] <kurze Beschreibung>"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Danke, dass du hilfst, das Skriptum zu verbessern!
+        **Du brauchst kein LaTeX zu kennen** — beschreibe den Fehler einfach anhand der PDF.
+
+  - type: dropdown
+    id: chapter
+    attributes:
+      label: Betroffenes Kapitel
+      description: In welchem Themenbereich liegt der Fehler?
+      options:
+        - "AG — Algebra und Geometrie"
+        - "FA — Funktionale Abhängigkeiten"
+        - "AN — Analysis"
+        - "WS — Wahrscheinlichkeit und Statistik"
+        - "Titelseite / allgemein / Layout"
+        - "Weiß ich nicht"
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Fundstelle (Abschnitt und Seitenzahl)
+      description: "So genau wie möglich — z. B. Abschnitt 3.2 'Differenzieren', Seite 42, Formel (3.4.2)."
+      placeholder: "z. B. Abschnitt 3.4 'Ableitungsregeln', Seite 42, Formel (3.4.2)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: Was steht aktuell in der PDF?
+      description: Text abtippen oder Screenshot unten anhängen. Formeln bitte möglichst genau wiedergeben.
+      placeholder: "z. B. (u·v)' = u'·v − u·v'"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Was sollte stattdessen dort stehen?
+      description: Die korrekte Version bzw. dein Vorschlag.
+      placeholder: "z. B. (u·v)' = u'·v + u·v'   (Produktregel — das Vorzeichen ist falsch)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: Begründung / Quelle (optional)
+      description: Schulbuch, BIFIE-Aufgabenpool, kurze Herleitung, Link …
+      placeholder: "z. B. Produktregel laut Schulbuch Mathe AHS Oberstufe 7, Kapitel 4."
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot der betroffenen PDF-Stelle
+      description: Stark empfohlen. Bild einfach ins Textfeld ziehen.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Abschlusscheck
+      options:
+        - label: "Ich habe die aktuelle Version der PDF überprüft."
+          required: true
+        - label: "Ich habe Kapitel und Seitenzahl angegeben."
+          required: true
