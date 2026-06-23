@@ -1,0 +1,37 @@
+# LaTeX build artifacts (the compiled PDF is intentionally kept)
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.listing
+
+# Latexmk / build helpers
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.xdv
+
+# Bibliography
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+
+# Index / glossary
+*.idx
+*.ind
+*.ilg
+*.glo
+*.gls
+*.glg
+
+# Beamer
+*.nav
+*.snm
+*.vrb
+
+# macOS
+.DS_Store
