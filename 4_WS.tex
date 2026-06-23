@@ -442,7 +442,11 @@ Oder über die Gegenwahrscheinlichkeit ausgedrückt
 
 \subsection{Wahrscheinlichkeitsverteilungen}
 Bevor man über Wahrscheinlichkeitsverteilungen sprechen kann, muss man zuerst den Begriff der \emph{Zufallsvariable} definieren. \\
-Die \textbf{Zufallsvariable $X$} ordnet jedem möglichen Ergebnis eines Zufallsexperiments eine reelle Zahl zu. Eine \emph{diskrete Zufallsvariable} nimmt abzählbar viele Werte an (z.B. Binomialverteilung). Eine \emph{stetige Zufallsvariable} kann unendlich viele Werte annehmen (z.B. Normalverteilung).
+Die \textbf{Zufallsvariable $X$} ordnet jedem möglichen Ergebnis eines Zufallsexperiments eine reelle Zahl zu. Man unterscheidet:
+\begin{itemize}
+    \item \textbf{diskrete Zufallsvariable}: nimmt nur abzählbar viele Werte an (z.\,B. Anzahl von Erfolgen) $\;\to\;$ Binomialverteilung
+    \item \textbf{stetige Zufallsvariable}: kann jeden Wert in einem Intervall annehmen (z.\,B. Körpergröße) $\;\to\;$ Normalverteilung
+\end{itemize}
 \subsubsection{diskrete Wahrscheinlichkeitsverteilungen}
 Die \textbf{Wahrscheinlichkeitsfunktion $f(x)$} ordnet jedem Wert der Zufallsvariable $X$ die Wahrscheinlichkeit zu, dass genau dieser Wert erreicht wird:
 \begin{equation}
@@ -456,6 +460,11 @@ Der Wert, den eine Zufallsvariable im Mittel annimmt, ist der \textbf{Erwartungs
 \begin{equation}
     E(X) = \sum_{i=0}^n x_i \cdot P(X=x_i) = \sum_{i=0}^n x_i \cdot f(x_i)
 \end{equation}
+Wie stark die einzelnen Werte im Mittel um den Erwartungswert streuen, beschreiben \textbf{Varianz} und \textbf{Standardabweichung} einer Zufallsvariable:
+\begin{align}
+    \mathrm{Var}(X) &= \sum_{i=0}^{n} \big(x_i - E(X)\big)^2 \cdot P(X=x_i) \\
+    \sigma(X) &= \sqrt{\mathrm{Var}(X)}
+\end{align}
 
 
 \begin{bsp}
@@ -578,6 +587,92 @@ Die Wahrscheinlichkeitsfunktion $f(x)$ und die Verteilungsfunktion $F(x)$ der Bi
     &p\dots\text{Erfolgswahrscheinlichkeit}
     \end{aligned}
 \end{equation}
+Erwartungswert, Varianz und Standardabweichung einer binomialverteilten Zufallsvariable lassen sich direkt aus $n$ und $p$ berechnen:
+\begin{equation}
+    E(X) = n\cdot p, \qquad
+    \mathrm{Var}(X) = n\cdot p\,(1-p), \qquad
+    \sigma(X) = \sqrt{n\cdot p\,(1-p)}
+\end{equation}
+
+\subsubsection*{Wahrscheinlichkeiten am Graphen ablesen}
+Jeder Balken der Wahrscheinlichkeitsfunktion zeigt, wie wahrscheinlich \emph{genau} $k$ Erfolge sind. Je nach Fragestellung werden unterschiedliche Balken hervorgehoben -- hier am Beispiel $\mathcal{B}(10,\,0.5)$:
+
+\def\binomdata{(0,0.0010)(1,0.0098)(2,0.0439)(3,0.1172)(4,0.2051)(5,0.2461)(6,0.2051)(7,0.1172)(8,0.0439)(9,0.0098)(10,0.0010)}
+
+\noindent
+\begin{minipage}[t]{0.245\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=\linewidth, height=4.1cm,
+    title={\small\textbf{genau} $k=5$},
+    ymin=0, ymax=0.30, xmin=-0.5, xmax=10.5,
+    xtick={0,5,10}, ytick={}, yticklabels={},
+    axis lines=middle, tick label style={font=\tiny}, xlabel={\small$k$},
+    every axis title/.style={font=\small, at={(0.5,1.08)}, anchor=south},
+]
+\addplot[ybar, bar width=0.22cm, fill=accent!25, draw=accent!45] coordinates {\binomdata};
+\addplot[ybar, bar width=0.22cm, fill=accent,    draw=accent]    coordinates {(5,0.2461)};
+\node[font=\tiny, accent] at (axis cs:5,0.276) {$24.6\,\%$};
+\end{axis}
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.245\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=\linewidth, height=4.1cm,
+    title={\small\textbf{höchstens} $k=3$},
+    ymin=0, ymax=0.30, xmin=-0.5, xmax=10.5,
+    xtick={0,5,10}, ytick={}, yticklabels={},
+    axis lines=middle, tick label style={font=\tiny}, xlabel={\small$k$},
+    every axis title/.style={font=\small, at={(0.5,1.08)}, anchor=south},
+]
+\addplot[ybar, bar width=0.22cm, fill=accent!25, draw=accent!45] coordinates {\binomdata};
+\addplot[ybar, bar width=0.22cm, fill=accent,    draw=accent]    coordinates {(0,0.0010)(1,0.0098)(2,0.0439)(3,0.1172)};
+\node[font=\tiny, accent] at (axis cs:7.5,0.276) {$17.2\,\%$};
+\end{axis}
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.245\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=\linewidth, height=4.1cm,
+    title={\small\textbf{mindestens} $k=8$},
+    ymin=0, ymax=0.30, xmin=-0.5, xmax=10.5,
+    xtick={0,5,10}, ytick={}, yticklabels={},
+    axis lines=middle, tick label style={font=\tiny}, xlabel={\small$k$},
+    every axis title/.style={font=\small, at={(0.5,1.08)}, anchor=south},
+]
+\addplot[ybar, bar width=0.22cm, fill=accent!25, draw=accent!45] coordinates {\binomdata};
+\addplot[ybar, bar width=0.22cm, fill=accent,    draw=accent]    coordinates {(8,0.0439)(9,0.0098)(10,0.0010)};
+\node[font=\tiny, accent] at (axis cs:2,0.276) {$5.5\,\%$};
+\end{axis}
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.245\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=\linewidth, height=4.1cm,
+    title={\small\textbf{Bereich} $3 \leq k \leq 7$},
+    ymin=0, ymax=0.30, xmin=-0.5, xmax=10.5,
+    xtick={0,5,10}, ytick={}, yticklabels={},
+    axis lines=middle, tick label style={font=\tiny}, xlabel={\small$k$},
+    every axis title/.style={font=\small, at={(0.5,1.08)}, anchor=south},
+]
+\addplot[ybar, bar width=0.22cm, fill=accent!25, draw=accent!45] coordinates {\binomdata};
+\addplot[ybar, bar width=0.22cm, fill=accent,    draw=accent]    coordinates {(3,0.1172)(4,0.2051)(5,0.2461)(6,0.2051)(7,0.1172)};
+\node[font=\tiny, accent] at (axis cs:1.2,0.276) {$89.1\,\%$};
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+
+\vspace{4pt}
+\noindent
+\begin{itemize}
+    \item $P(X = k)$: \textbf{genau ein Balken} abgelesen
+    \item $P(X \leq k)$: alle Balken \textbf{von links bis} $k$ addiert (kumuliert)
+    \item $P(X \geq k)$: alle Balken \textbf{von} $k$ \textbf{bis rechts} addiert, oder $1 - P(X \leq k-1)$
+    \item $P(a \leq X \leq b)$: alle Balken \textbf{zwischen} $a$ \textbf{und} $b$ addiert
+\end{itemize}
 
 \begin{bsp}
     Eine Münze wird 10 mal geworfen. \\
@@ -666,7 +761,7 @@ Die Wahrscheinlichkeitsfunktion $f(x)$ und die Verteilungsfunktion $F(x)$ der Bi
     Die Verteilungsfunktion liefert uns alle Wahrscheinlichkeiten bis zu einer gewissen Erfolgsanzahl x aufsummiert. \\
     Wahrscheinlichkeit für weniger als 4 mal \emph{Kopf}:
     \begin{align*}
-        P(X<4) &= P(X=1)+P(X=2)+P(X=3) = f(1)+f(2)+f(3) = \\
+        P(X<4) &= P(X=0)+P(X=1)+P(X=2)+P(X=3) = f(0)+f(1)+f(2)+f(3) = \\
                &= \sum_{k=0}^3 P(X=k) = \sum_{k=0}^3 f(k)
     \end{align*}
     Wahrscheinlichkeit für 3,4 oder 5 mal \emph{Kopf}:
@@ -675,11 +770,56 @@ Die Wahrscheinlichkeitsfunktion $f(x)$ und die Verteilungsfunktion $F(x)$ der Bi
     \]
     Für Bereiche ist es auch sehr nützlich die Verteilungsfunktion zu verwenden.
     \begin{align*}
-        P(3 \leq X \leq 5) &= F(5) - F(3) = \\
-        &= \sum_{k=0}^{5} \binom{n}{k} 0.5^k (1-0.5)^{10-k} - \sum_{k=0}^{3} \binom{n}{k} 0.5^k (1-0.5)^{10-k} =\\
-        &= \sum_{k=3}^{5} \binom{n}{k} 0.5^k (1-0.5)^{10-k} = 0.56
+        P(3 \leq X \leq 5) &= F(5) - F(2) = \\
+        &= \sum_{k=0}^{5} \binom{n}{k} 0.5^k (1-0.5)^{10-k} - \sum_{k=0}^{2} \binom{n}{k} 0.5^k (1-0.5)^{10-k} =\\
+        &= \sum_{k=3}^{5} \binom{n}{k} 0.5^k (1-0.5)^{10-k} = 0.57
     \end{align*}
     
+\end{bsp}
+
+\begin{bsp}
+\textbf{Single-Choice-Test:} Ein Test hat 10 Fragen, jede mit 4 Antwortmöglichkeiten (genau eine richtig). Ein Schüler rät bei jeder Frage zufällig. \\[4pt]
+\textbf{Voraussetzungen:}
+\begin{itemize}
+    \item Zwei Ergebnisse: richtig oder falsch, \quad $p = \tfrac{1}{4} = 0.25$
+    \item Jede Frage ist unabhängig, $p$ bleibt konstant
+    \item $n = 10$ Fragen
+\end{itemize}
+Es gilt $X \sim \mathcal{B}(n=10,\; p=0.25)$.
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        width=11cm, height=5.5cm,
+        xlabel={Anzahl richtiger Antworten $k$},
+        ylabel={Wahrscheinlichkeit},
+        ymin=0, ymax=0.34,
+        xmin=-0.5, xmax=10.5,
+        xtick={0,1,2,3,4,5,6,7,8,9,10},
+        ytick={0,0.05,0.10,0.15,0.20,0.25,0.30},
+        yticklabels={$0$,$5\,\%$,$10\,\%$,$15\,\%$,$20\,\%$,$25\,\%$,$30\,\%$},
+        grid=major, axis lines=middle,
+        tick label style={font=\small},
+    ]
+    \addplot[ybar, bar width=0.4cm, fill=accent!35, draw=accent!60] coordinates {
+        (0,0.0563)(1,0.1877)(2,0.2816)(3,0.2503)(4,0.1460)
+        (5,0.0584)(6,0.0162)(7,0.0031)(8,0.0004)(9,0.0000)(10,0.0000)};
+    \addplot[ybar, bar width=0.4cm, fill=accent, draw=accent] coordinates {(3,0.2503)};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+\textbf{Wie wahrscheinlich ist es, genau 3 Fragen richtig zu beantworten?} (hervorgehobener Balken)
+\[
+    P(X = 3) \approx 25.0\,\%
+\]
+\textbf{Wie wahrscheinlich ist es, höchstens 2 Fragen richtig zu beantworten?}
+\[
+    P(X \leq 2) \approx 52.6\,\%
+\]
+\textbf{Wie wahrscheinlich ist es, mindestens 5 Fragen richtig zu beantworten?}
+\[
+    P(X \geq 5) = 1 - P(X \leq 4) \approx 7.8\,\%
+\]
+Durch reines Raten wäre man bei einer Bestehensgrenze von 5 richtigen Antworten nur in $7.8\,\%$ aller Fälle erfolgreich.
 \end{bsp}
 
 \pagebreak
@@ -700,6 +840,12 @@ Die \textbf{Dichtefunktion} der Normalverteilung ist folgendermaßen definiert:
     f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}
 \end{equation}
 Die Dichtefunktion hat wegen ihrer Form auch den Namen gaußsche Glockenkurve. Beim Erwartungswert $\mu$ hat die Funktion ihr Maximum, und um die Standardabweichung $\sigma$ nach links und nach rechts verschoben befinden sich die Wendepunkte.
+\begin{itemize}
+    \item Die Kurve ist \textbf{symmetrisch} um $\mu$.
+    \item Das \textbf{Maximum} liegt bei $x = \mu$, die \textbf{Wendepunkte} bei $\mu - \sigma$ und $\mu + \sigma$.
+    \item Die \textbf{Gesamtfläche} unter der Kurve ist immer $1$ ($=100\,\%$) -- Wahrscheinlichkeiten entsprechen Flächen.
+    \item Großes $\sigma$ $\to$ Kurve \textbf{breiter und flacher};\quad kleines $\sigma$ $\to$ Kurve \textbf{schmaler und höher}.
+\end{itemize}
 
 \makeatletter
 % schnelle erf-Approximation (A&S 7.1.26)
@@ -743,7 +889,7 @@ Die Dichtefunktion hat wegen ihrer Form auch den Namen gaußsche Glockenkurve. B
     xticklabels={$\mu-\sigma$, $\mu$,$\mu+\sigma$},
     ytick={}, yticklabels={},
   ]
-    \addplot[blue, very thick, smooth] {1/sqrt(2*pi)*exp(-x^2/2)};
+    \addplot[accent, very thick, smooth] {1/sqrt(2*pi)*exp(-x^2/2)};
 
     \addplot[black, only marks, mark=*, mark size=2pt]
       coordinates {(-1, {1/sqrt(2*pi)*exp(-1/2)}) (1, {1/sqrt(2*pi)*exp(-1/2)})};
@@ -771,7 +917,7 @@ Die Dichtefunktion hat wegen ihrer Form auch den Namen gaußsche Glockenkurve. B
     xticklabels={$\mu-\sigma$, $\mu$,$\mu+\sigma$},
     ytick={0,0.5,1},
   ]
-    \addplot[red, very thick, smooth] {0.5*(1+erf(x/sqrt(2)))};
+    \addplot[accent, very thick, smooth] {0.5*(1+erf(x/sqrt(2)))};
     \draw[black, dashed] (axis cs:-5,0.5) -- (axis cs:0,0.5);
     \draw[black, dashed] (axis cs:0,0) -- (axis cs:0,0.5);
     \addplot[black, only marks, mark=*, mark size=2pt]
@@ -785,8 +931,8 @@ Die Dichtefunktion hat wegen ihrer Form auch den Namen gaußsche Glockenkurve. B
 \noindent
 Die \textbf{Verteilungsfunktion} $F(x_0)$ gibt an wie wahrscheinlich es ist, dass die normalverteilte Zufallsvariable $X$ höchstens den Wert $x_0$ erreicht.
 \begin{equation}
-    F(x_) = \int_{-\infty}^{x_0} f(x) dx = \frac{1}{\sqrt{\sigma 2\pi}}
-        \int_{-\infty}^{x_0} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}
+    F(x_0) = P(X \leq x_0) = \int_{-\infty}^{x_0} f(x)\,dx = \frac{1}{\sigma\sqrt{2\pi}}
+        \int_{-\infty}^{x_0} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2} dx
 \end{equation}
 
 
@@ -806,12 +952,12 @@ Die \textbf{Verteilungsfunktion} $F(x_0)$ gibt an wie wahrscheinlich es ist, das
     width=6.5cm,
     height=6cm,
     xtick={-1,0,1},
-    xticklabels={$\mu-\sigma$,$\mu$,$\mu+\sigma$},
+    xticklabels={$\mu{-}\sigma$,$\mu$,$\mu{+}\sigma$},
     ytick={},
     yticklabels={},
 ]
 % Normalverteilung mit sigma=1
-\addplot[blue, very thick, smooth] {1/sqrt(2*pi)*exp(-x^2/2)};
+\addplot[accent, very thick, smooth] {1/sqrt(2*pi)*exp(-x^2/2)};
 \end{axis}
 % Erste Grafik: sigma=1.5
 \begin{axis}[
@@ -831,13 +977,12 @@ Die \textbf{Verteilungsfunktion} $F(x_0)$ gibt an wie wahrscheinlich es ist, das
     width=6.5cm,
     height=6cm,
     xtick={-1.5,0,1.5},
-    xticklabels={},
+    xticklabels={$\mu{-}\sigma$,$\mu$,$\mu{+}\sigma$},
     ytick={},
     yticklabels={},
 ]
 % Normalverteilung mit sigma=1.5
-\addplot[blue, very thick, smooth] {1/(1.5*sqrt(2*pi))*exp(-x^2/(2*1.5^2))};
-\node[below, font=\small] at (axis cs:0,0.0) {$\mu-\sigma$};
+\addplot[accent, very thick, smooth] {1/(1.5*sqrt(2*pi))*exp(-x^2/(2*1.5^2))};
 \end{axis}
 
 % Zweite Grafik: sigma=0.8
@@ -857,13 +1002,171 @@ Die \textbf{Verteilungsfunktion} $F(x_0)$ gibt an wie wahrscheinlich es ist, das
     xmax=5,
     width=6.5cm,
     height=6cm,
-    xtick={-0.7,0,0.7},
-    xticklabels={$\mu-\sigma$,$\mu$,$\mu+\sigma$},
+    xtick={-0.8,0,0.8},
+    xticklabels={$\mu{-}\sigma$,$\mu$,$\mu{+}\sigma$},
     ytick={},
     yticklabels={},
 ]
 % Normalverteilung mit sigma=0.7
-\addplot[blue, very thick, smooth] {1/(0.8*sqrt(2*pi))*exp(-x^2/(2*0.8^2))};
+\addplot[accent, very thick, smooth] {1/(0.8*sqrt(2*pi))*exp(-x^2/(2*0.8^2))};
 \end{axis}
 
 \end{tikzpicture}
+
+\subsubsection*{Berechnung mit GeoGebra}
+\begin{geogebracode}
+    Ansicht -> Wahrscheinlichkeitsrechner -> Normalverteilung
+    // mu und sigma eintragen
+    // gewünschten Bereich markieren oder Werte direkt eingeben
+\end{geogebracode}
+
+\subsubsection*{Flächen als Wahrscheinlichkeiten}
+Da Wahrscheinlichkeiten bei stetigen Verteilungen \emph{Flächen} unter der Dichtefunktion entsprechen, unterscheidet man je nach Fragestellung drei Fälle:
+
+\noindent
+\begin{minipage}[t]{0.31\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=\linewidth, height=4.1cm,
+    title={\small$P(X \leq x_0)$},
+    axis lines=middle,
+    domain=-3.5:3.5, samples=100,
+    ymin=0, ymax=0.46,
+    xmin=-3.8, xmax=3.8,
+    xtick={1}, xticklabels={$x_0$},
+    ytick={}, yticklabels={},
+    tick label style={font=\small},
+    every axis title/.style={font=\small, at={(0.5,1.08)}, anchor=south},
+]
+\addplot[fill=accent!30, draw=none, domain=-3.5:1]
+  {1/sqrt(2*pi)*exp(-x^2/2)} \closedcycle;
+\addplot[accent, thick, smooth] {1/sqrt(2*pi)*exp(-x^2/2)};
+\draw[dashed, accent!70] (axis cs:1,0) -- (axis cs:1,{1/sqrt(2*pi)*exp(-0.5)});
+\end{axis}
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.31\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=\linewidth, height=4.1cm,
+    title={\small$P(X \geq x_0)$},
+    axis lines=middle,
+    domain=-3.5:3.5, samples=100,
+    ymin=0, ymax=0.46,
+    xmin=-3.8, xmax=3.8,
+    xtick={1}, xticklabels={$x_0$},
+    ytick={}, yticklabels={},
+    tick label style={font=\small},
+    every axis title/.style={font=\small, at={(0.5,1.08)}, anchor=south},
+]
+\addplot[fill=accent!30, draw=none, domain=1:3.5]
+  {1/sqrt(2*pi)*exp(-x^2/2)} \closedcycle;
+\addplot[accent, thick, smooth] {1/sqrt(2*pi)*exp(-x^2/2)};
+\draw[dashed, accent!70] (axis cs:1,0) -- (axis cs:1,{1/sqrt(2*pi)*exp(-0.5)});
+\end{axis}
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.31\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=\linewidth, height=4.1cm,
+    title={\small$P(x_0 \leq X \leq x_1)$},
+    axis lines=middle,
+    domain=-3.5:3.5, samples=100,
+    ymin=0, ymax=0.46,
+    xmin=-3.8, xmax=3.8,
+    xtick={-0.8,1.2}, xticklabels={$x_0$,$x_1$},
+    ytick={}, yticklabels={},
+    tick label style={font=\small},
+    every axis title/.style={font=\small, at={(0.5,1.08)}, anchor=south},
+]
+\addplot[fill=accent!30, draw=none, domain=-0.8:1.2]
+  {1/sqrt(2*pi)*exp(-x^2/2)} \closedcycle;
+\addplot[accent, thick, smooth] {1/sqrt(2*pi)*exp(-x^2/2)};
+\draw[dashed, accent!70] (axis cs:-0.8,0) -- (axis cs:-0.8,{1/sqrt(2*pi)*exp(-0.32)});
+\draw[dashed, accent!70] (axis cs:1.2,0) -- (axis cs:1.2,{1/sqrt(2*pi)*exp(-0.72)});
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+
+\vspace{2pt}
+\noindent
+Die \textbf{gefärbte Fläche} unter der Kurve entspricht jeweils der \textbf{Wahrscheinlichkeit}, dass ein zufällig gewählter Wert in genau diesem Bereich liegt. Wegen $P(X \geq x_0) = 1 - P(X \leq x_0)$ und $P(x_0 \leq X \leq x_1) = F(x_1) - F(x_0)$ genügt es, die Verteilungsfunktion $F$ zu kennen.
+
+\subsubsection*{Sigma-Regel}
+Unabhängig von $\mu$ und $\sigma$ liegt bei jeder Normalverteilung stets derselbe Anteil der Werte symmetrisch um den Erwartungswert:
+\begin{align}
+    P(\mu-\sigma \leq X \leq \mu+\sigma)   &\approx 68.3\,\% \\
+    P(\mu-2\sigma \leq X \leq \mu+2\sigma) &\approx 95.4\,\% \\
+    P(\mu-3\sigma \leq X \leq \mu+3\sigma) &\approx 99.7\,\%
+\end{align}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    axis x line=bottom, axis y line=none,
+    domain=-3.9:3.9, samples=200,
+    ymin=0, ymax=0.45, xmin=-4.2, xmax=4.2,
+    width=13cm, height=5cm,
+    xtick={-3,-2,-1,0,1,2,3},
+    xticklabels={$\mu{-}3\sigma$,$\mu{-}2\sigma$,$\mu{-}\sigma$,$\mu$,$\mu{+}\sigma$,$\mu{+}2\sigma$,$\mu{+}3\sigma$},
+    tick label style={font=\small},
+]
+    \addplot[fill=accent!15, draw=none, domain=-3:3] {1/sqrt(2*pi)*exp(-x^2/2)} \closedcycle;
+    \addplot[fill=accent!30, draw=none, domain=-2:2] {1/sqrt(2*pi)*exp(-x^2/2)} \closedcycle;
+    \addplot[fill=accent!55, draw=none, domain=-1:1] {1/sqrt(2*pi)*exp(-x^2/2)} \closedcycle;
+    \addplot[accent, very thick, smooth] {1/sqrt(2*pi)*exp(-x^2/2)};
+    \node[font=\small\bfseries, white] at (axis cs:0,0.11) {$68.3\,\%$};
+    \node[font=\footnotesize] at (axis cs:1.5,0.055) {$95.4\,\%$};
+    \node[font=\footnotesize] at (axis cs:2.55,0.014) {$99.7\,\%$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\noindent\textbf{Quantil $x_p$:} Umgekehrt ist manchmal die Wahrscheinlichkeit vorgegeben und der Wert gesucht. Das \emph{$p$-Quantil} $x_p$ ist jener Wert, den $p\,\%$ aller Werte nicht überschreiten, d.\,h. $P(X \leq x_p) = p$.
+
+\begin{bsp}
+Die Körpergröße erwachsener Frauen in Österreich ist annähernd normalverteilt mit $\mu = 166\,\mathrm{cm}$ und $\sigma = 6\,\mathrm{cm}$:
+\[
+    X \sim \mathcal{N}(\mu = 166,\; \sigma^2 = 36)
+\]
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[
+    axis y line=none, axis x line=bottom,
+    domain=142:192, samples=200,
+    ymin=0, ymax=0.078,
+    xmin=142, xmax=192,
+    width=13cm, height=5.5cm,
+    xtick={148,154,160,166,172,178,184},
+    xlabel={Körpergröße in cm},
+    tick label style={font=\small},
+  ]
+    % schraffierte Fläche P(X > 170)
+    \addplot[fill=accent!50, draw=none, domain=170:192]
+      {1/(6*sqrt(2*pi))*exp(-(x-166)^2/72)} \closedcycle;
+    % Glockenkurve
+    \addplot[accent, very thick, smooth]
+      {1/(6*sqrt(2*pi))*exp(-(x-166)^2/72)};
+    % mu-Markierung
+    \draw[black!50, dashed] (axis cs:166,0) -- (axis cs:166,{1/(6*sqrt(2*pi))});
+    \node[below, font=\small] at (axis cs:166,0) {$\mu$};
+    % Beschriftung der Fläche
+    \node[font=\small] at (axis cs:180,0.052) {$P(X>170)\approx 25.2\,\%$};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\textbf{Wie groß ist der Anteil der Frauen, die größer als $170\,\mathrm{cm}$ sind?}
+\[
+    P(X > 170) = 1 - P(X \leq 170) \approx 25.2\,\%
+\]
+\textbf{Wie groß ist der Anteil der Frauen zwischen $160\,\mathrm{cm}$ und $178\,\mathrm{cm}$?}
+\[
+    P(160 \leq X \leq 178) \approx 81.9\,\%
+\]
+Plausibilitätsprüfung mit der Sigma-Regel: $68\,\%$ der Frauen liegen zwischen $\mu - \sigma = 160\,\mathrm{cm}$ und $\mu + \sigma = 172\,\mathrm{cm}$. Das Intervall $[160, 178]$ reicht bis $\mu + 2\sigma$, daher ist $81.9\,\%$ plausibel. \\[4pt]
+\textbf{Welche Größe wird von $90\,\%$ aller Frauen nicht überschritten?} \emph{(90\,\%-Quantil)}
+\[
+    x_{0.90} \approx 173.7\,\mathrm{cm}
+\]
+\end{bsp}
