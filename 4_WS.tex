@@ -275,7 +275,7 @@ Ein Ereignis kann sich aus mehreren Einzelereignissen zusammensetzen. Diese Erei
     In einer Schachtel befinden sich 3 große rote, 4 kleine rote, 7 große blaue, 2 kleine blaue sowie 9 grüne Kugeln. Jemand zieht eine Kugel. Wie hoch ist die Wahrscheinlichkeit, dass er 1) eine rote oder blaue Kugel 2) eine große oder rote Kugel zieht?
 \end{aufgabe}
 \begin{loesung} \\
-    1) Die Ereignisse, dass eine \emph{rote} oder \emph{blaue Kugel} gezogen wird sind voneinander unabhängig:
+    1) Die Ereignisse, dass eine \emph{rote} oder \emph{blaue Kugel} gezogen wird, schließen einander aus:
     \[
         P(\text{rot} \lor \text{blau}) = P(\text{rot}) + P(\text{blau}) = 
             \frac{7}{25} + \frac{9}{25} = 0.64 = 64\,\%
@@ -289,10 +289,10 @@ Ein Ereignis kann sich aus mehreren Einzelereignissen zusammensetzen. Diese Erei
 
 \subsubsection*{Multiplikationssatz für die UND-Verknüpfung von Ereignissen}
 \begin{align}
-    &P(A\;\mathrm{und}\;B)=P(A\land B) = P(A) + P(B) \qquad \text{(A, B einander ausschließend)} \\
-    &P(A\;\mathrm{und}\;B)=P(A\land B) = P(A) + P(B) - P(B|A) \qquad \text{(A, B beliebig)}
+    &P(A\;\mathrm{und}\;B)=P(A\land B) = P(A) \cdot P(B) \qquad \text{(A, B unabhängig)} \\
+    &P(A\;\mathrm{und}\;B)=P(A\land B) = P(A) \cdot P(B|A) = P(B) \cdot P(A|B) \qquad \text{(A, B beliebig)}
 \end{align}
-Hierbei ist $P(B|A)$ die bedingte Wahrscheinlichkeit, also die Wahrscheinlichkeit, dass $A$ eintritt unter der Voraussetzung, dass $B$ schon eingetreten ist. Sie wird durch den Satz von Bayes formuliert.
+Hierbei ist $P(B|A)$ die bedingte Wahrscheinlichkeit, also die Wahrscheinlichkeit, dass $B$ eintritt unter der Voraussetzung, dass $A$ schon eingetreten ist. Sie wird durch den Satz von Bayes formuliert. Für einander \emph{ausschließende} Ereignisse gilt dagegen $P(A \land B) = 0$.
 \subsubsection*{Satz von Bayes für bedingte Wahrscheinlichkeiten}
 \begin{equation}
     P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)} = \frac{P(A \land B)}{P(B)}
